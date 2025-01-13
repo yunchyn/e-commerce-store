@@ -1,0 +1,48 @@
+.dots_custom {
+  display: inline-block;
+  vertical-align: middle;
+  margin: auto 0;
+  padding: 0;
+}
+
+.dots_custom li {
+  list-style: none;
+  cursor: pointer;
+  display: inline-block;
+  margin: 0 6px;
+  padding: 0;
+}
+
+.dots_custom li button {
+  border: none;
+  background-color: white;
+  color: transparent;
+  cursor: pointer;
+  display: block;
+  height: 8px;
+  width: 8px;
+  border-radius: 100%;
+  padding: 0;
+}
+
+.dots_custom li.slick-active button {
+  width: 30px;
+  border-radius: 100px;
+}
+
+/* 애니메이션 */
+.dots_custom {
+  @apply inline-flex items-center justify-center space-x-2;
+}
+
+.dots_custom li {
+  @apply list-none cursor-pointer inline-flex items-center justify-center;
+}
+
+.dots_custom li button {
+  @apply border-0 bg-white text-transparent cursor-pointer block h-2 w-2 rounded-full p-0 transition-all duration-300 ease-in-out;
+}
+
+.dots_custom li.slick-active button {
+  @apply w-7 rounded-full;
+}

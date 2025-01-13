@@ -20,7 +20,7 @@
 }
 @font-face {
   font-family: "Inter-Medium";
-  src: url("/fonts/Inter-Meduim.ttf");
+  src: url("/fonts/Inter-Medium.ttf");
 }
 
 :root {
@@ -39,4 +39,17 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: "Poppins", serif;
+  overflow-y: scroll;
+}
+
+.container::-webkit-scrollbar {
+  height: 4px; /* 스크롤바 너비 */
+}
+.container::-webkit-scrollbar-thumb {
+  background-color: #343835;
+  border-radius: 9999px;
+}
+.container::-webkit-scrollbar-track {
+  background-color: #e8ecef;
+  border-radius: 9999px;
 }

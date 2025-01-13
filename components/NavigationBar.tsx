@@ -2,6 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import NotificationBar from "./NotificationBar";
+import Link from "next/link";
 
 export default function NavigationBar() {
   const pathname = usePathname();
@@ -10,7 +11,10 @@ export default function NavigationBar() {
     <>
       <NotificationBar />
       <div className="relative bg-white w-full h-[60px] flex flex-row justify-center items-center gap-10 max-w-[1120px] mx-auto">
-        <div className="absolute left-0">
+        <Link
+          href="/"
+          className="absolute left-0"
+        >
           <svg
             width="105"
             height="27"
@@ -27,11 +31,31 @@ export default function NavigationBar() {
               fill="#6C7275"
             />
           </svg>
-        </div>
-        <p className={pathname === "/" ? "text-neutral-7" : "text-neutral-4"}>Home</p>
-        <p className={pathname === "/shop" ? "text-neutral-7" : "text-neutral-4"}>Shop</p>
-        <p className={pathname === "/product" ? "text-neutral-7" : "text-neutral-4"}>Product</p>
-        <p className={pathname === "/contact-us" ? "text-neutral-7" : "text-neutral-4"}>Contact Us</p>
+        </Link>
+        <Link
+          href="/"
+          className={pathname === "/" ? "text-neutral-7" : "text-neutral-4"}
+        >
+          Home
+        </Link>
+        <Link
+          href="/shop"
+          className={pathname === "/shop" ? "text-neutral-7" : "text-neutral-4"}
+        >
+          Shop
+        </Link>
+        <Link
+          href="/product"
+          className={pathname === "/product" ? "text-neutral-7" : "text-neutral-4"}
+        >
+          Product
+        </Link>
+        <Link
+          href="contact-us"
+          className={pathname === "/contact-us" ? "text-neutral-7" : "text-neutral-4"}
+        >
+          Contact Us
+        </Link>
         <div className="absolute right-0 flex flex-row gap gap-4">
           <svg
             width="24"
