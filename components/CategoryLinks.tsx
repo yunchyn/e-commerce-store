@@ -1,46 +1,46 @@
-export default function CategoryLinks() {
-  const ShopLink = ({ category, className = "" }: { category: string; className?: string }) => {
-    return (
-      <div className={`absolute flex flex-col gap-3 text-headline5 p-12 ${className}`}>
-        {category}
-        <div className="flex">
-          <span className="flex flex-row items-center gap-1 text-buttonS border-b border-neutral-7">
-            Shop Now
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 20 20"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M4.16666 10H15.8333"
-                stroke="#141718"
-                strokeWidth="1.25"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M10.8333 15L15.8333 10"
-                stroke="#141718"
-                strokeWidth="1.25"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M10.8333 5L15.8333 10"
-                stroke="#141718"
-                strokeWidth="1.25"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </span>
-        </div>
+export const ShopLink = ({ category, className = "" }: { category: string; className?: string }) => {
+  return (
+    <div className={`absolute flex flex-col gap-3 text-headline5 m-12 cursor-pointer ${className}`}>
+      {category}
+      <div className="flex">
+        <span className="flex flex-row items-center gap-1 text-buttonS border-b border-neutral-7">
+          Shop Now
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M4.16666 10H15.8333"
+              stroke="#141718"
+              strokeWidth="1.25"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M10.8333 15L15.8333 10"
+              stroke="#141718"
+              strokeWidth="1.25"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M10.8333 5L15.8333 10"
+              stroke="#141718"
+              strokeWidth="1.25"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </span>
       </div>
-    );
-  };
+    </div>
+  );
+};
 
+export default function CategoryLinks() {
   return (
     <div className="w-full flex flex-row gap-6">
       <div className="relative w-1/2">
