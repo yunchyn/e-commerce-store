@@ -1,16 +1,33 @@
-interface IProduct {
-  name: string;
-  rating: number;
-  price: number;
-  isOnSale: boolean;
-  salePrice?: number;
-  image: string;
+// not null : id, name, created_at, category, price, is_on_sale
+export interface IProduct {
+  id?: number;
+  name?: string;
+  created_at?: Date;
+  category?: "living room" | "bedroom" | "kitchen" | "Bathroom";
+  rating?: number;
+  price?: number;
+  is_on_sale?: boolean;
   description?: string;
-  measurements?: string;
+  sale_price?: number;
+  images?: string[];
   colors?: string[];
+  is_new?: boolean;
 }
 
-export const ProductCard = ({ name, rating, price, isOnSale, salePrice, image }: IProduct) => {
+export const ProductCard = ({
+  id = 1,
+  name = "Modern Sofa",
+  rating = 4.5,
+  created_at = new Date("2025-01-14T10:00:00Z"),
+  category = "living room",
+  price = 400.0,
+  is_on_sale = true,
+  description = "Nice and cool Sofa.",
+  sale_price = 199.99,
+  images = ["/url/product.png"],
+  colors = ["white", "black"],
+  is_new = true,
+}: IProduct) => {
   return (
     <div className="flex flex-col gap-1 text-neutral-7 ">
       <div className="w-[262px] h-[349px] bg-neutral-2 relative group">
@@ -20,8 +37,15 @@ export const ProductCard = ({ name, rating, price, isOnSale, salePrice, image }:
             Add to cart
           </div>
         </div>
+        {/* NEW, SALE */}
+        <div className="absolute flex flex-col gap-2 p-4">
+          {is_new && <div className="bg-white px-[14px] py-2 rounded text-hairline1 font-hairline">NEW</div>}
+          {is_on_sale && (
+            <div className="bg-green text-white px-[14px] py-2 rounded text-hairline1 font-hairline">SALE</div>
+          )}
+        </div>
         <img
-          src="/img/product.png"
+          src={images[0]}
           alt="proudct"
         />
       </div>
@@ -44,9 +68,9 @@ export const ProductCard = ({ name, rating, price, isOnSale, salePrice, image }:
       </div>
       <div className="font-body-semi text-body2Semi">{name}</div>
       <div className="font-caption text-caption1Semi">
-        {isOnSale && salePrice ? (
+        {is_on_sale && sale_price ? (
           <div className="flex flex-row gap-3">
-            <span>${salePrice.toFixed(2)}</span>
+            <span>${sale_price.toFixed(2)}</span>
             <span className="line-through text-neutral-4">${price.toFixed(2)}</span>
           </div>
         ) : (

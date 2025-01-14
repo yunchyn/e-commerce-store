@@ -1,8 +1,11 @@
+import ProductList from "@/components/ProductList";
+
 export default function Shop() {
   return (
     <div>
       <div className="flex flex-col gap-6">
         <div className="max-w-[1120px] mx-auto">
+          {/* 배너 */}
           <div className="flex flex-col justify-center items-center">
             <div className="absolute flex flex-col text-center gap-6">
               <p className="text-buttonXS font-button flex flex-row gap-4 justify-center items-center">
@@ -34,6 +37,7 @@ export default function Shop() {
               alt="banner"
             />
           </div>
+          <ProductList />
         </div>
       </div>
     </div>
