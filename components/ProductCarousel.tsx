@@ -1,15 +1,19 @@
-import { ProductCard } from "./ProductCard";
+import { IProduct, ProductCard } from "./ProductCard";
 
-export default function ProductCarousel() {
+interface IProductCarousel {
+  products?: IProduct[];
+}
+
+export default function ProductCarousel({ products = [] }: IProductCarousel) {
   return (
     <div className="container overflow-x-auto scrollbar pb-12">
       <div className="flex flex-row gap-6">
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
+        {products.map((product) => (
+          <ProductCard
+            key={product.id}
+            {...product}
+          />
+        ))}
       </div>
     </div>
   );
