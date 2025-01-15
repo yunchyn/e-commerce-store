@@ -40,6 +40,7 @@ body {
   background: var(--background);
   font-family: "Poppins", serif;
   overflow-y: scroll;
+  cursor: default;
 }
 
 .container::-webkit-scrollbar {

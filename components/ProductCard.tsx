@@ -1,33 +1,22 @@
 // not null : id, name, created_at, category, price, is_on_sale
+export type Category = "all rooms" | "living room" | "bedroom" | "kitchen" | "bathroom";
+
 export interface IProduct {
   id?: number;
-  name?: string;
+  name: string;
   created_at?: Date;
-  category?: "living room" | "bedroom" | "kitchen" | "Bathroom";
-  rating?: number;
-  price?: number;
-  is_on_sale?: boolean;
+  category?: Category;
+  rating: number;
+  price: number;
+  is_on_sale: boolean;
   description?: string;
   sale_price?: number;
-  images?: string[];
+  images: string[];
   colors?: string[];
   is_new?: boolean;
 }
 
-export const ProductCard = ({
-  id = 1,
-  name = "Modern Sofa",
-  rating = 4.5,
-  created_at = new Date("2025-01-14T10:00:00Z"),
-  category = "living room",
-  price = 400.0,
-  is_on_sale = true,
-  description = "Nice and cool Sofa.",
-  sale_price = 199.99,
-  images = ["/url/product.png"],
-  colors = ["white", "black"],
-  is_new = true,
-}: IProduct) => {
+export const ProductCard = ({ name, rating, price, is_on_sale, sale_price, images, is_new }: IProduct) => {
   return (
     <div className="flex flex-col gap-1 text-neutral-7 ">
       <div className="w-[262px] h-[349px] bg-neutral-2 relative group">

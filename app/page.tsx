@@ -1,6 +1,7 @@
 import CategoryLinks from "@/components/CategoryLinks";
 import ProductCarousel from "@/components/ProductCarousel";
 import BannerSlider from "@/components/BannerSlider";
+import NewArrivals from "@/components/NewArrivals";
 
 export default function Home() {
   return (
@@ -21,14 +22,7 @@ export default function Home() {
           <CategoryLinks />
 
           {/* New Arrivals */}
-          <div className="pt-12">
-            <div className="text-headline4">
-              <p>New</p> <p>Arrivals</p>
-            </div>
-            <div className="pt-12">
-              <ProductCarousel />
-            </div>
-          </div>
+          <NewArrivals />
 
           {/* Values 섹션 */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 py-12">
