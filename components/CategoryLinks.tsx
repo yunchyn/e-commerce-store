@@ -1,6 +1,12 @@
+import Link from "next/link";
+import { toLowercaseFirstLetters } from "./utilities";
+
 export const ShopLink = ({ category, className = "" }: { category: string; className?: string }) => {
   return (
-    <div className={`absolute flex flex-col gap-3 text-headline5 m-12 cursor-pointer ${className}`}>
+    <Link
+      href={`/shop?category=${toLowercaseFirstLetters(category)}`}
+      className={`absolute flex flex-col gap-3 text-headline5 m-12 cursor-pointer ${className}`}
+    >
       {category}
       <div className="flex">
         <span className="flex flex-row items-center gap-1 text-buttonS border-b border-neutral-7">
@@ -36,7 +42,7 @@ export const ShopLink = ({ category, className = "" }: { category: string; class
           </svg>
         </span>
       </div>
-    </div>
+    </Link>
   );
 };
 

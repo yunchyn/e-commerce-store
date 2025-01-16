@@ -1,5 +1,6 @@
 import { Category } from "@/components/ProductCard";
 import ProductList from "@/components/ProductList";
+import { toUppercaseFirstLetters } from "@/components/utilities";
 import Link from "next/link";
 
 export default function Shop() {
@@ -74,7 +75,10 @@ export default function Shop() {
                       href={`/shop?category=${category}`}
                       key={index}
                     >
-                      {category}
+                      <p className="hover:text-neutral-7 border-b-2 border-transparent hover:border-neutral-7 inline-block">
+                        {" "}
+                        {toUppercaseFirstLetters(category)}
+                      </p>
                     </Link>
                   ))}
                 </div>

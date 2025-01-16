@@ -2,12 +2,11 @@
 
 import { ReactNode, useEffect, useState } from "react";
 import { IProduct, ProductCard } from "./ProductCard";
-import { fetchAllProducts, fetchProductsByCategory } from "@/dataHandler";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { fetchAllProducts, fetchProductsByCategory } from "@/components/dataHandler";
+import { useSearchParams } from "next/navigation";
+import { toUppercaseFirstLetters } from "./utilities";
 
 export default function ProductList() {
-  // const pathname = usePathname();
-  // const category = pathname === "/shop" ? "All Rooms" : pathname.replace("/shop/", "").replace("-", " ");
   const searchParams = useSearchParams();
   const category = searchParams.get("category") || "all rooms";
   console.log(category);
@@ -36,14 +35,14 @@ export default function ProductList() {
     };
 
     loadProducts();
-  }, []);
+  }, [category]);
 
   return (
-    <>
+    <div className="w-full h-full">
       <div className="w-full flex flex-row items-center pb-10">
-        <div className="w-1/2 text-body1Semi font-body-semi">{category}</div>
-        <div className="w-1/2 flex flex-row gap-8 justify-end">
-          <div className="flex flex-row gap-2 items-center text-body2Semi font-body-semi">
+        <div className="w-1/2 text-body1Semi font-body-semi">{toUppercaseFirstLetters(category)}</div>
+        <div className="w-1/2  flex flex-row gap-8 justify-end items-center">
+          <div className="flex flex-row gap-2  text-body2Semi font-body-semi">
             sort by
             <svg
               width="20"
@@ -131,14 +130,20 @@ export default function ProductList() {
         </div>
       </div>
 
-      <div className="max-w-[834px] grid grid-cols-2 lg:grid-cols-3 gap-6">
-        {products.map((product) => (
-          <ProductCard
-            key={product.id}
-            {...product}
-          />
-        ))}
-      </div>
-    </>
+      {products.length === 0 ? (
+        <div className="h-2/3 flex justify-center items-center text-neutral-4 font-body">
+          No products found for the selected category.
+        </div>
+      ) : (
+        <div className="max-w-[834px] grid grid-cols-2 lg:grid-cols-3 gap-6">
+          {products.map((product) => (
+            <ProductCard
+              key={product.id}
+              {...product}
+            />
+          ))}
+        </div>
+      )}
+    </div>
   );
 }

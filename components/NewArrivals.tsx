@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import ProductCarousel from "./ProductCarousel";
 import { IProduct } from "./ProductCard";
-import { fetchNewProducts } from "@/dataHandler";
+import { fetchNewProducts } from "@/components/dataHandler";
 
 export default function NewArrivals() {
   const [products, setProducts] = useState<IProduct[]>([]);
