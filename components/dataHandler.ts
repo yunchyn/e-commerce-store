@@ -1,5 +1,5 @@
-import { Category, IProduct } from "./components/ProductCard";
-import { supabase } from "./supabase";
+import { Category, IProduct } from "./ProductCard";
+import { supabase } from "../supabase";
 
 // 모든 제품
 export async function fetchAllProducts(): Promise<IProduct[]> {
