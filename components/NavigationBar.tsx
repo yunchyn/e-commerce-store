@@ -3,14 +3,23 @@
 import { usePathname, useRouter } from "next/navigation";
 import NotificationBar from "./NotificationBar";
 import Link from "next/link";
+import { supabase } from "@/supabase";
 
 export default function NavigationBar() {
   const pathname = usePathname();
   const router = useRouter();
 
-  const isUserLoggedIn = () => {
-    // 로그인 여부 확인해서 로그인했으면 사용자 페이지, 로그인 하지 않았으면 로그인 페이지로로
-    router.push("/user/auth");
+  const isUserLoggedIn = async () => {
+    const { data } = await supabase.auth.getSession();
+
+    // session이 null일 경우 로그인되지 않은 상태
+    if (data.session) {
+      // 로그인한 경우
+      router.push("/user");
+    } else {
+      // 로그인하지 않은 경우
+      router.push("/auth");
+    }
   };
 
   return (

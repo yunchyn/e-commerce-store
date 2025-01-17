@@ -1,5 +1,4 @@
 import CategoryLinks from "@/components/CategoryLinks";
-import ProductCarousel from "@/components/ProductCarousel";
 import BannerSlider from "@/components/BannerSlider";
 import NewArrivals from "@/components/NewArrivals";
 
