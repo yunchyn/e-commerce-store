@@ -9,7 +9,6 @@ import { toUppercaseFirstLetters } from "./utilities";
 export default function ProductList() {
   const searchParams = useSearchParams();
   const category = searchParams.get("category") || "all rooms";
-  console.log(category);
 
   const [products, setProducts] = useState<IProduct[]>([]);
 
