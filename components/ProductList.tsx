@@ -1,14 +1,23 @@
 "use client";
 
 import { ReactNode, useEffect, useState } from "react";
-import { IProduct, ProductCard } from "./ProductCard";
+import { Category, IProduct, ProductCard } from "./ProductCard";
 import { fetchAllProducts, fetchProductsByCategory } from "@/components/dataHandler";
 import { useSearchParams } from "next/navigation";
 import { toUppercaseFirstLetters } from "./utilities";
 
 export default function ProductList() {
   const searchParams = useSearchParams();
-  const category = searchParams.get("category") || "all rooms";
+  // const category = searchParams.get("category") || "all rooms";
+
+  const categories: { id: number; name: Category }[] = [
+    { id: 1, name: "living room" },
+    { id: 2, name: "bedroom" },
+    { id: 3, name: "kitchen" },
+    { id: 4, name: "bathroom" },
+  ];
+
+  const categoryId = categories.find((cat) => cat.name === (searchParams.get("category") || "all rooms"))?.id || 0;
 
   const [products, setProducts] = useState<IProduct[]>([]);
 
@@ -24,22 +33,24 @@ export default function ProductList() {
 
   useEffect(() => {
     const loadProducts = async () => {
-      if (category === "all rooms") {
+      if (categoryId === 0) {
         const fetchedProducts = await fetchAllProducts();
         setProducts(fetchedProducts);
       } else {
-        const fetchedProducts = await fetchProductsByCategory(category);
+        const fetchedProducts = await fetchProductsByCategory(categoryId);
         setProducts(fetchedProducts);
       }
     };
 
     loadProducts();
-  }, [category]);
+  }, [categoryId]);
 
   return (
     <div className="w-full h-full">
       <div className="w-full flex flex-row items-center pb-10">
-        <div className="w-1/2 text-body1Semi font-body-semi">{toUppercaseFirstLetters(category)}</div>
+        <div className="w-1/2 text-body1Semi font-body-semi">
+          {categoryId === 0 ? "All Rooms" : toUppercaseFirstLetters(categories[categoryId - 1].name)}
+        </div>
         <div className="w-1/2  flex flex-row gap-8 justify-end items-center">
           <div className="flex flex-row gap-2  text-body2Semi font-body-semi">
             sort by
@@ -137,7 +148,7 @@ export default function ProductList() {
         <div className="max-w-[834px] grid grid-cols-2 lg:grid-cols-3 gap-6">
           {products.map((product) => (
             <ProductCard
-              key={product.id}
+              key={product.product_id}
               {...product}
             />
           ))}

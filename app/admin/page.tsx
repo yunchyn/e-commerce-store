@@ -16,7 +16,7 @@ export default function Admin() {
 
   return (
     <div className="flex min-h-screen">
-      {/* 메뉴뉴 */}
+      {/* 메뉴 */}
       <div className="w-64 bg-neutral-2 p-6">
         <h1 className="text-lg font-bold mb-6">Admin Panel</h1>
         <ul className="space-y-4">
