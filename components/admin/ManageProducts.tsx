@@ -3,21 +3,9 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { supabase } from "@/supabase";
 import { useState } from "react";
+import { IProduct } from "../ProductCard";
 
 type Category = "all rooms" | "living room" | "bedroom" | "kitchen" | "bathroom";
-
-interface IProduct {
-  product_id: number;
-  name: string;
-  created_at: Date;
-  category_id: number;
-  price: number;
-  is_new: boolean;
-  sale_price?: number;
-  image: string;
-  description?: string;
-  colors?: string[];
-}
 
 const categories: { id: number; name: Category }[] = [
   { id: 1, name: "living room" },
@@ -44,23 +32,25 @@ export default function ManageProducts() {
 
     let imageUrls: string = "";
 
-    if (image) {
-      //   const uploadPromises = Array.from(images).map(async (image) => {
-      //     const { data, error } = await supabase.storage.from("products").upload(`product_${name}_${Date.now()}`, image);
-      //     if (error) {
-      //       throw new Error(error.message);
-      //     }
-      //     return data?.path ? `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/sign/proudcts/${data.path}` : "";
-      //   });
-      //   try {
-      //     imageUrls = await Promise.all(uploadPromises);
-      //   } catch (error: any) {
-      //     setMessage(`Image upload failed: ${error.message}`);
-      //     setLoading(false);
-      //     return;
-      //   }
-      const { data, error } = await supabase.storage.from("products").upload(`product_${name}_${Date.now()}`, image);
+    // 파일 업로드
+    if (image && image.length > 0) {
+      const file = image[0];
+      const fileName = `product_${name}_${Date.now()}`;
+
+      try {
+        const { data, error } = await supabase.storage.from("products").upload(fileName, file, { upsert: true });
+
+        if (error) throw error;
+
+        const { data: publicUrl } = supabase.storage.from("products").getPublicUrl(fileName);
+        imageUrls = publicUrl.publicUrl;
+
+        console.log("Image uploaded successfully:", data);
+      } catch (error: any) {
+        console.error("Image upload error:", error.message);
+      }
     }
+
     // insert
     try {
       const { data, error } = await supabase
@@ -74,11 +64,14 @@ export default function ManageProducts() {
             sale_price: sale_price ? sale_price : null,
             image: imageUrls,
             description,
-            colors: Array.isArray(colors) ? colors.map((color) => color.trim()) : [],
+            colors: colors
+              ? colors.split(",").map((color) => color.trim()) // 쉼표로 구분된 문자열을 배열로 변환
+              : [],
             created_at: new Date().toISOString(),
           },
         ])
         .select();
+      if (error) throw error;
     } catch (error) {
       setMessage(error ? `Insert Error: ${error}` : "Product added successfully!");
     }
@@ -123,6 +116,7 @@ export default function ManageProducts() {
           type="number"
           placeholder="Price"
           {...register("price", { required: "Price is required" })}
+          step="any"
           className="border p-2"
         />
         {errors.price && <p>{errors.price.message}</p>}
@@ -139,6 +133,7 @@ export default function ManageProducts() {
           type="number"
           placeholder="Sale Price (optional)"
           {...register("sale_price")}
+          step="any"
           className="border p-2"
         />
 

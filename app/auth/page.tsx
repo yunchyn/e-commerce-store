@@ -66,7 +66,7 @@ export default function SignUp() {
       }
       console.log(signUpData);
 
-      // 로그인인
+      // 로그인
       signInHandler({ email, password });
     } catch (error) {
       console.error(error);

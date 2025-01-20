@@ -10,7 +10,7 @@ export default function ProductCarousel({ products = [] }: IProductCarousel) {
       <div className="flex flex-row gap-6">
         {products.map((product) => (
           <ProductCard
-            key={product.id}
+            key={product.product_id}
             {...product}
           />
         ))}
