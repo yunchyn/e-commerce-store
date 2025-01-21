@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { StarRating } from "./utilities";
+import { useSearchParams } from "next/navigation";
 
-// not null : id, name, created_at, category, price, is_on_sale
 export type Category = "all rooms" | "living room" | "bedroom" | "kitchen" | "bathroom";
 
 export interface IProduct {
@@ -14,13 +14,16 @@ export interface IProduct {
   sale_price?: number;
   image: string;
   description?: string;
-  colors?: string; // ,로 split하니까 string으로 지정
+  colors: string[];
+  rating?: number;
 }
 
-export const ProductCard = ({ product_id, name, price, sale_price, image, is_new }: IProduct) => {
+export const ProductCard = ({ product_id, name, price, sale_price, image, is_new, rating }: IProduct) => {
+  const category = useSearchParams().get("category") || "all rooms";
+
   return (
     <Link
-      href={`/shop/${product_id}`}
+      href={`/shop/${product_id}?category=${category}`}
       className="flex flex-col gap-1 text-neutral-7 "
     >
       <div className="w-[262px] h-[349px] bg-neutral-2 relative group">
@@ -45,7 +48,7 @@ export const ProductCard = ({ product_id, name, price, sale_price, image, is_new
 
       {/* 별점 */}
       <div className="pt-3">
-        <StarRating rating={5} />
+        <StarRating rating={rating} />
       </div>
 
       <div className="font-body-semi text-body2Semi">{name}</div>

@@ -3,7 +3,6 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { supabase } from "@/supabase";
 import { useState } from "react";
-import { IProduct } from "../ProductCard";
 
 type Category = "all rooms" | "living room" | "bedroom" | "kitchen" | "bathroom";
 
@@ -14,17 +13,30 @@ const categories: { id: number; name: Category }[] = [
   { id: 4, name: "bathroom" },
 ];
 
+interface IProductInput {
+  product_id: number;
+  name: string;
+  created_at: Date;
+  category_id: number;
+  price: number;
+  is_new: boolean;
+  sale_price?: number;
+  image: string;
+  description?: string;
+  colors?: string; // ,로 split하니까 string으로 지정
+}
+
 export default function ManageProducts() {
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<IProduct>();
+  } = useForm<IProductInput>();
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
-  const onSubmit: SubmitHandler<IProduct> = async (data) => {
+  const onSubmit: SubmitHandler<IProductInput> = async (data) => {
     setLoading(true);
     setMessage("");
 

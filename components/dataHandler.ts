@@ -1,5 +1,13 @@
-import { Category, IProduct } from "./ProductCard";
+import { IProduct } from "./ProductCard";
 import { supabase } from "../supabase";
+
+export interface IReview {
+  review_id: number;
+  member_id: number;
+  product_id: number;
+  rate: number;
+  content: string;
+}
 
 // 모든 제품
 export async function fetchAllProducts(): Promise<IProduct[]> {
@@ -43,4 +51,14 @@ export async function fetchProductById(product_id: number): Promise<IProduct | n
   }
 
   return data as IProduct;
+}
+
+export async function fetchReviewsByProduct(product_id: number): Promise<IReview[]> {
+  const { data, error } = await supabase.from("review").select("*").eq("product_id", product_id);
+
+  if (error) {
+    console.error("Error fetching reviews:", error);
+    return [];
+  }
+  return data as IReview[];
 }
