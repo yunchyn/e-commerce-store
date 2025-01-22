@@ -5,8 +5,9 @@ import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
-interface IMember {
+export interface IMember {
   name?: string;
+  profile_pic?: string;
   email: string;
   password: string;
 }
@@ -48,6 +49,27 @@ export default function SignUp() {
     }
   };
 
+  // 멤버 테이블에 회원 정보 저장
+  async function registerMember({ name, email, password }: IMember) {
+    const { data: user } = await supabase.auth.getUser();
+    if (!user?.user) {
+      console.error("사용자 정보 없음");
+      return null;
+    }
+
+    const { data: memberData, error: memberError } = await supabase
+      .from("member")
+      .insert([{ member_id: user.user.id, name, email }])
+      .select();
+
+    if (memberError) {
+      console.error("Member Insertion Error:", memberError);
+      return null;
+    }
+
+    return memberData;
+  }
+
   // 회원가입
   const signUpHandler: SubmitHandler<IMember> = async (data) => {
     const { name, email, password } = data;
@@ -64,13 +86,16 @@ export default function SignUp() {
         console.error(signUpError);
         return;
       }
-      console.log(signUpData);
 
-      // 로그인
-      signInHandler({ email, password });
+      await registerMember(data);
+      console.log(signUpData);
     } catch (error) {
       console.error(error);
+      return;
     }
+
+    // 로그인
+    signInHandler({ email, password });
   };
 
   // 로그인

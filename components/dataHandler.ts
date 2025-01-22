@@ -1,9 +1,10 @@
 import { IProduct } from "./ProductCard";
 import { supabase } from "../supabase";
+import { IMember } from "@/app/auth/page";
 
 export interface IReview {
   review_id: number;
-  member_id: number;
+  member_id: IMember;
   product_id: number;
   rate: number;
   content: string;
@@ -41,7 +42,7 @@ export async function fetchProductsByCategory(category_id: number): Promise<IPro
   return data as IProduct[];
 }
 
-// id로 튜플 가져오기
+// id로 프로덕트 가져오기
 export async function fetchProductById(product_id: number): Promise<IProduct | null> {
   const { data, error } = await supabase.from("product").select("*").eq("product_id", product_id).single();
 
@@ -53,12 +54,41 @@ export async function fetchProductById(product_id: number): Promise<IProduct | n
   return data as IProduct;
 }
 
+export async function fetchMemberById(member_id: string): Promise<IMember | null> {
+  const { data, error } = await supabase.from("member").select("*").eq("member_id", member_id).single();
+
+  if (error) {
+    console.error("Error fetching member:", error);
+    return null;
+  }
+
+  return data as IMember;
+}
+
+// export async function fetchReviewsByProduct(product_id: number): Promise<IReview[]> {
+//   const { data, error } = await supabase.from("review").select("*").eq("product_id", product_id);
+
+//   if (error) {
+//     console.error("Error fetching reviews:", error);
+//     return [];
+//   }
+//   return data as IReview[];
+// }
+
+export interface IReviewWithMember extends IReview {
+  member: IMember;
+}
+
 export async function fetchReviewsByProduct(product_id: number): Promise<IReview[]> {
-  const { data, error } = await supabase.from("review").select("*").eq("product_id", product_id);
+  const { data, error } = await supabase
+    .from("review")
+    .select("*, member_id(name)") // member 테이블에서 name을 가져오기 위해 member_id를 join
+    .eq("product_id", product_id);
 
   if (error) {
     console.error("Error fetching reviews:", error);
     return [];
   }
+
   return data as IReview[];
 }

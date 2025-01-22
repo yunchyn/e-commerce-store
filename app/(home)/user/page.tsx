@@ -39,7 +39,7 @@ export default function User() {
         {/* 유저정보 */}
         <div className="w-1/4 flex flex-col items-center bg-neutral-2 py-10">
           <div className="w-20 h-20 bg-neutral-5 rounded-full"></div>
-          <p className="pt-1 pb-10 text-body1Semi font-body-semi">{userName}</p>
+          <div className="pt-1 pb-10 text-body1Semi font-body-semi">{userName ? `${userName}` : "ㅤ"}</div>
 
           <div className="flex flex-col gap-4 w-4/5">
             <div className="text-[#807E7E] text-body2Semi font-body-semi flex flex-col gap-3">

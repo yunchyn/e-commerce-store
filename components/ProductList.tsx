@@ -9,16 +9,14 @@ import { toUppercaseFirstLetters } from "./utilities";
 export default function ProductList() {
   const searchParams = useSearchParams();
   // const category = searchParams.get("category") || "all rooms";
-
+  const priceRange = searchParams.get("priceRange") || "";
   const categories: { id: number; name: Category }[] = [
     { id: 1, name: "living room" },
     { id: 2, name: "bedroom" },
     { id: 3, name: "kitchen" },
     { id: 4, name: "bathroom" },
   ];
-
   const categoryId = categories.find((cat) => cat.name === (searchParams.get("category") || "all rooms"))?.id || 0;
-
   const [products, setProducts] = useState<IProduct[]>([]);
 
   const SortOption = ({ children }: { children: ReactNode }) => (
@@ -33,17 +31,21 @@ export default function ProductList() {
 
   useEffect(() => {
     const loadProducts = async () => {
-      if (categoryId === 0) {
-        const fetchedProducts = await fetchAllProducts();
-        setProducts(fetchedProducts);
-      } else {
-        const fetchedProducts = await fetchProductsByCategory(categoryId);
-        setProducts(fetchedProducts);
+      let fetchedProducts = categoryId === 0 ? await fetchAllProducts() : await fetchProductsByCategory(categoryId);
+
+      if (priceRange) {
+        const [minPrice, maxPrice] = priceRange.split("-").map(Number);
+        fetchedProducts = fetchedProducts.filter((product) => {
+          const price = product.sale_price ?? product.price;
+          return price >= minPrice && price <= maxPrice;
+        });
       }
+
+      setProducts(fetchedProducts);
     };
 
     loadProducts();
-  }, [categoryId]);
+  }, [categoryId, priceRange]);
 
   return (
     <div className="w-full h-full">

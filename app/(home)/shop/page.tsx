@@ -1,12 +1,21 @@
+"use client";
+
 import { Category } from "@/components/ProductCard";
 import ProductList from "@/components/ProductList";
 import { toUppercaseFirstLetters } from "@/components/utilities";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 
 export default function Shop() {
   const categories: Category[] = ["all rooms", "living room", "bedroom", "kitchen", "bathroom"];
-  type PriceCategory = "0-50" | "51-100" | "101-200" | "201+";
-  const priceCategories: PriceCategory[] = ["0-50", "51-100", "101-200", "201+"];
+  const priceCategories = [
+    { label: "All Price", min: 0, max: Infinity },
+    { label: "$0.00 - 99.99", min: 0, max: 99.99 },
+    { label: "$100.00 - 199.99", min: 100, max: 199.99 },
+    { label: "$200.00 - 299.99", min: 200, max: 299.99 },
+    { label: "$300.00+", min: 300, max: Infinity },
+  ];
+  const searchParams = useSearchParams();
 
   return (
     <div>
@@ -88,9 +97,19 @@ export default function Shop() {
               <div className="flex flex-col gap-4">
                 <p className="text-neutral-7 text-body2Semi font-body-semi">PRICE</p>
                 <div className="text-[#807E7E] text-caption1 font-body-semi flex flex-col gap-3">
-                  {priceCategories.map((category, index) => (
-                    <p key={index}>{category}</p>
-                  ))}
+                  {priceCategories.map((category, index) => {
+                    const currentCategory = searchParams.get("category") || "";
+                    return (
+                      <Link
+                        key={index}
+                        href={`/shop?category=${currentCategory}&priceRange=${category.min}-${category.max}`}
+                      >
+                        <p className="hover:text-neutral-7 border-b-2 border-transparent hover:border-neutral-7 inline-block">
+                          {category.label}
+                        </p>
+                      </Link>
+                    );
+                  })}
                 </div>
               </div>
             </div>
