@@ -23,8 +23,8 @@ export default function Footer() {
         </div>
         <div className="w-1/2 flex flex-row justify-end gap-10 text-caption1 text-neutral-3 font-caption">
           <Link href="/">Home</Link>
-          <Link href="/">Shop</Link>
-          <Link href="/">Product</Link>
+          <Link href="/shop">Shop</Link>
+          <Link href="/sale">Sale</Link>
           <Link href="/">Contact Us</Link>
         </div>
       </div>
