@@ -5,11 +5,13 @@ import { useEffect, useState } from "react";
 import { fetchCartByMemberId, ICartProduct } from "./dataHandler";
 import { supabase } from "@/supabase";
 import CartSummary from "./CartSummary";
-import Link from "next/link";
+import CartItem from "./CartItem";
+import { CartItemSkeleton } from "./SkeletonComponents";
 
 export default function CartList() {
   const router = useRouter();
   const [cartProducts, setCartProducts] = useState<ICartProduct[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchSessionAndLoadCart() {
@@ -27,6 +29,7 @@ export default function CartList() {
         console.log(fetchedProduct);
         setCartProducts(fetchedProduct);
       }
+      setLoading(false);
     }
 
     fetchSessionAndLoadCart();
@@ -45,7 +48,6 @@ export default function CartList() {
       return;
     }
 
-    // UI 업데이트: 삭제된 상품 제외한 새 배열 설정
     setCartProducts((prev) => prev.filter((product) => product.cart_id !== cartId));
   };
 
@@ -62,7 +64,7 @@ export default function CartList() {
           <p>Subtotal</p>
         </div>
 
-        {cartProducts.map((product) => (
+        {/* {cartProducts.map((product) => (
           <div
             key={product.cart_id}
             className="grid grid-cols-[2fr_1fr_1fr_1fr] text-center border-b border-neutral-3 py-6
@@ -113,7 +115,16 @@ export default function CartList() {
             <p className="font-caption text-[18px]">${product.sale_price ?? product.price}</p>
             <p className="font-caption-semi text-[18px]">${product.quantity * (product.sale_price ?? product.price)}</p>
           </div>
-        ))}
+        ))} */}
+        {loading
+          ? Array.from({ length: 3 }).map((_, index) => <CartItemSkeleton key={index} />)
+          : cartProducts.map((product) => (
+              <CartItem
+                key={product.cart_id}
+                product={product}
+                handleRemove={handleRemove}
+              />
+            ))}
       </div>
 
       <CartSummary subtotal={subtotal} />
