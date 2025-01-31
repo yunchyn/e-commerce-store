@@ -65,16 +65,6 @@ export async function fetchMemberById(member_id: string): Promise<IMember | null
   return data as IMember;
 }
 
-// export async function fetchReviewsByProduct(product_id: number): Promise<IReview[]> {
-//   const { data, error } = await supabase.from("review").select("*").eq("product_id", product_id);
-
-//   if (error) {
-//     console.error("Error fetching reviews:", error);
-//     return [];
-//   }
-//   return data as IReview[];
-// }
-
 export interface IReviewWithMember extends IReview {
   member: IMember;
 }
@@ -91,4 +81,52 @@ export async function fetchReviewsByProduct(product_id: number): Promise<IReview
   }
 
   return data as IReview[];
+}
+
+export interface ICartProduct {
+  cart_id: number;
+  member_id: number;
+  product_id: number;
+  quantity: number;
+  color?: string;
+  name: string;
+  image?: string;
+  price: number;
+  sale_price?: number;
+}
+
+export async function fetchCartByMemberId(member_id: string): Promise<ICartProduct[] | null> {
+  const { data, error } = await supabase
+    .from("cart")
+    .select(
+      `
+      cart_id,
+      member_id,
+      product_id,
+      quantity,
+      color,
+      product:product_id (
+        name,
+        image,
+        price,
+        sale_price
+      )
+    `
+    )
+    .eq("member_id", member_id);
+
+  if (error) {
+    console.error("Error fetching cart:", error);
+    return null;
+  }
+  console.log(data);
+
+  return data.map((cartItem) => {
+    const product = Array.isArray(cartItem.product) ? cartItem.product[0] : cartItem.product;
+
+    return {
+      ...cartItem,
+      ...product,
+    };
+  });
 }
