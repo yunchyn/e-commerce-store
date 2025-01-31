@@ -6,25 +6,33 @@ import { fetchProductById } from "./dataHandler";
 import { StarRating } from "./utilities";
 import ProductSlider from "./ProductSlider";
 import { AddToCart } from "./AddToCart";
+import { ProductInfoSkeleton } from "./SkeletonComponents";
 
 export default function ProductInfo({ id }: { id: number }) {
   const [product, setProduct] = useState<IProduct | null>(null);
   const [color, setColor] = useState("");
   const [quantity, setQuantity] = useState(1);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!id) return;
 
     const loadProduct = async () => {
+      setLoading(true);
       const fetchedProduct = await fetchProductById(id);
       if (fetchedProduct) {
         console.log(fetchedProduct);
         setProduct(fetchedProduct);
       }
+      setLoading(false);
     };
 
     loadProduct();
   }, [id]);
+
+  if (loading) {
+    return <ProductInfoSkeleton />;
+  }
 
   if (!product) return;
 
