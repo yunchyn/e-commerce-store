@@ -107,11 +107,18 @@ export const ProductCard = ({ product_id, name, price, sale_price, image, is_new
       href={`/shop/${product_id}?category=${category}`}
       className="flex flex-col gap-1 text-neutral-7 "
     >
-      <div className="w-[262px] h-[349px] bg-neutral-2 relative group">
+      <div
+        className="w-[262px] h-[349px] bg-neutral-2 relative group
+      max-sm:w-[231px] max-sm:h-[307px]"
+      >
         {/* hover시 장바구니 버튼 */}
-        <div className="absolute w-full flex justify-center bottom-5">
+        <div
+          className="absolute w-full flex justify-center bottom-5
+        max-sm:bottom-4"
+        >
           <button
-            className="bg-neutral-7 w-4/5 py-2 rounded-lg text-buttonS font-button flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            className="bg-neutral-7 w-4/5 py-2 rounded-lg text-buttonS font-button flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300
+            max-sm:w-10/12"
             onClick={(e) => {
               e.preventDefault();
               AddToCart(product_id, 1);

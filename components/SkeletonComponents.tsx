@@ -18,7 +18,7 @@ export function CartItemSkeleton() {
 
 export function ProductInfoSkeleton() {
   return (
-    <div className="flex flex-row gap-16 pb-16 border-b border-neutral-3 animate-pulse">
+    <div className="w-full flex flex-row gap-16 pb-16 border-b border-neutral-3 animate-pulse">
       <div className="w-1/2 max-w-[547px] bg-gray-200 h-[728px] rounded"></div>
       <div className="relative w-1/2 flex flex-col gap-4">
         <div className="h-6 w-32 bg-gray-200 rounded"></div>

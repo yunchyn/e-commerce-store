@@ -38,7 +38,7 @@ export default function ProductInfo({ id }: { id: number }) {
 
   return (
     <div className="flex flex-row gap-16 pb-16 border-b border-neutral-3">
-      <div className="relative w-1/2 max-w-[547px]">
+      <div className="relative min-w-1/2 max-w-[547px]">
         <div className="absolute top-0 left-0 flex flex-col gap-2 p-8 z-10 outline-none">
           {product.is_new && <div className="bg-white px-[18px] py-2 rounded text-hairline1 font-hairline">NEW</div>}
           {product.sale_price && (
@@ -51,7 +51,6 @@ export default function ProductInfo({ id }: { id: number }) {
       <div className="w-1/2 flex flex-col gap-4 relative">
         <div className="flex flex-row items-center text-caption2 font-caption gap-3">
           <StarRating rating={product.rating} />
-          {/* 11 Reviews */}
         </div>
         <p className="text-headline4 font-headline">{product.name}</p>
         <p className="text-body2 font-body text-neutral-4">{product.description}</p>

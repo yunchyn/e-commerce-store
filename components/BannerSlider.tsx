@@ -9,7 +9,10 @@ import "./BannerSlider.css";
 const CustomPrevArrow = (props: any) => {
   const { onClick } = props;
   return (
-    <div className="absolute left-4 top-1/2 transform -translate-y-1/2 z-10">
+    <div
+      className="absolute left-4 top-1/2 transform -translate-y-1/2 z-10
+    max-sm:hidden"
+    >
       <svg
         width="84"
         height="84"
@@ -99,7 +102,10 @@ const CustomPrevArrow = (props: any) => {
 const CustomNextArrow = (props: any) => {
   const { onClick } = props;
   return (
-    <div className="absolute right-4 top-1/2 transform -translate-y-1/2 z-10">
+    <div
+      className="absolute right-4 top-1/2 transform -translate-y-1/2 z-10
+    max-sm:hidden"
+    >
       <svg
         width="84"
         height="84"
@@ -227,7 +233,8 @@ export default function BannerSlider() {
           <img
             src={slide.image}
             alt={slide.alt}
-            className="w-full h-auto object-cover"
+            className="w-full h-auto object-cover
+            max-sm:h-[304px]"
           />
         </div>
       ))}

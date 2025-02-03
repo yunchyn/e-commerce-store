@@ -6,14 +6,26 @@ export default function Home() {
   return (
     <div>
       <div className="flex flex-col gap-6">
-        <div className="max-w-[1120px] mx-auto">
+        <div
+          className="w-full max-w-[1120px] mx-auto 
+        max-sm:px-8"
+        >
           {/* 배너 */}
           <BannerSlider />
-          <div className="flex flex-row justify-center items-center pt-8 pb-10">
-            <div className="w-3/5 text-headline2">
+          <div
+            className="flex flex-row justify-center items-center pt-8 pb-10
+          max-sm:flex-col"
+          >
+            <div
+              className="w-3/5 text-headline2
+            max-sm:w-full max-sm:text-headline4"
+            >
               Simply Unique<span className="text-neutral-4">/</span> Simply Better.
             </div>
-            <div className="w-2/5 text-body2 font-body text-neutral-4">
+            <div
+              className="w-2/5 text-body2 font-body text-neutral-4
+            max-sm:w-full max-sm:pt-4 max-sm:text-caption1 max-sm:font-caption"
+            >
               <span className=" font-bold text-neutral-5">3legant</span> is a gift & decorations store based in HCMC,
               Vietnam. Est since 2019.
             </div>
@@ -24,8 +36,15 @@ export default function Home() {
           <NewArrivals />
 
           {/* Values 섹션 */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 py-12">
-            <div className="flex flex-col gap-4 py-12 px-8 bg-neutral-2 text-headline7 text-neutral-7">
+          <div
+            className="grid grid-cols-2 sm:grid-cols-4 gap-6 py-12
+          max-sm:gap-2 max-sm:py-4 max-sm:pt-14"
+          >
+            <div
+              className="flex flex-col gap-4 py-12 px-8 bg-neutral-2 text-headline7 text-neutral-7
+              justify-center
+            max-sm:text-caption1Semi max-sm:font-caption-semi max-sm:py-8 max-sm:px-3"
+            >
               <svg
                 width="48"
                 height="48"
@@ -55,11 +74,15 @@ export default function Home() {
               </svg>
               <div>
                 Free Shipping
-                <div className="pt-2 text-caption1 text-neutral-4">Order above $200</div>
+                <div className="pt-2 text-caption1 text-neutral-4 font-caption">Order above $200</div>
               </div>
             </div>
 
-            <div className="flex flex-col gap-4 py-12 px-8 bg-neutral-2 text-headline7 text-neutral-7">
+            <div
+              className="flex flex-col gap-4 py-12 px-8 bg-neutral-2 text-headline7 text-neutral-7
+              justify-center
+            max-sm:text-caption1Semi max-sm:font-caption-semi max-sm:py-8 max-sm:px-3"
+            >
               <svg
                 width="48"
                 height="48"
@@ -101,11 +124,15 @@ export default function Home() {
               </svg>
               <div>
                 Money-back
-                <div className="pt-2 text-caption1 text-neutral-4">30 days guarantee</div>
+                <div className="pt-2 text-caption1 text-neutral-4 font-caption">30 days guarantee</div>
               </div>
             </div>
 
-            <div className="flex flex-col gap-4 py-12 px-8 bg-neutral-2 text-headline7 text-neutral-7">
+            <div
+              className="flex flex-col gap-4 py-12 px-8 bg-neutral-2 text-headline7 text-neutral-7
+              justify-center
+            max-sm:text-caption1Semi max-sm:font-caption-semi max-sm:py-8 max-sm:px-3"
+            >
               <svg
                 width="48"
                 height="48"
@@ -122,11 +149,15 @@ export default function Home() {
               </svg>
               <div>
                 Secure Payments
-                <div className="pt-2 text-caption1 text-neutral-4">Secured by Stripe</div>
+                <div className="pt-2 text-caption1 text-neutral-4 font-caption">Secured by Stripe</div>
               </div>
             </div>
 
-            <div className="flex flex-col gap-4 py-12 px-8 bg-neutral-2 text-headline7 text-neutral-7">
+            <div
+              className="flex flex-col gap-4 py-12 px-8 bg-neutral-2 text-headline7 text-neutral-7
+              justify-center
+            max-sm:text-caption1Semi max-sm:font-caption-semi max-sm:py-8 max-sm:px-3"
+            >
               <svg
                 width="48"
                 height="48"
@@ -143,30 +174,43 @@ export default function Home() {
               </svg>
               <div>
                 24/7 Support
-                <div className="pt-2 text-caption1 text-neutral-4">Phone and Email support</div>
+                <div className="pt-2 text-caption1 text-neutral-4 font-caption">Phone and Email support</div>
               </div>
             </div>
           </div>
         </div>
 
         {/* sale banner */}
-        <div className="w-full bg-neutral-2 flex flex-row">
+        <div
+          className="w-full bg-neutral-2 flex flex-row
+        max-sm:flex-col"
+        >
           <img
             src="/img/sale-banner.png"
             alt="banner"
-            className="w-1/2 max-h-[532px] object-cover"
+            className="w-1/2 max-h-[532px] object-cover
+            max-sm:w-full max-sm:h-[367px]"
           />
-          <div className="w-1/2 max-w-[500px] flex flex-col gap-4 justify-center text-headline4 pl-[72px]">
+          <div
+            className="w-1/2 max-w-[500px] flex flex-col gap-4 justify-center text-headline4 pl-[72px]
+          max-sm:w-full max-sm:px-8 max-sm:py-[72px]"
+          >
             <p className="text-hairline1 text-blue font-hairline">SALE UP TO 35% OFF</p>
-            <div>
+            <div
+              className="
+            max-sm:text-headline5 max-sm:font-headline"
+            >
               <p>HUNDREDS of</p>
               <p>New lower prices!</p>
             </div>
-            <p className="text-body1 font-body">
+            <p
+              className="text-body1 font-body
+            max-sm:text-body2"
+            >
               It’s more affordable than ever to give every room in your home a stylish makeover
             </p>
             <div className="flex">
-              <span className="flex flex-row items-center gap-1 text-buttonS border-b border-neutral-7">
+              <span className="flex flex-row items-center gap-1 text-buttonXS font-button border-b border-neutral-7">
                 Shop Now
                 <svg
                   width="20"
