@@ -1,5 +1,5 @@
 import Footer from "@/components/Footer";
-import NavigationBar from "@/components/NavigationBar";
+import NavigationBar from "@/components/navbar/NavigationBar";
 
 export default function HomeLayout({ children }: { children: React.ReactNode }) {
   return (

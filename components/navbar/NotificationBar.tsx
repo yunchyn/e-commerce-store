@@ -9,7 +9,10 @@ export default function NotificationBar() {
   if (!isVisible) return null;
 
   return (
-    <div className="relative bg-neutral-2 w-full h-10 text-caption1Semi font-caption-semi flex justify-center items-center gap-3">
+    <div
+      className="relative bg-neutral-2 w-full h-10 text-caption1Semi font-caption-semi flex justify-center items-center gap-3
+    max-sm:text-caption2Semi"
+    >
       <svg
         width="22"
         height="20"
@@ -25,7 +28,8 @@ export default function NotificationBar() {
       30% off storewide — Limited time!
       <Link
         href="/"
-        className="flex flex-row text-blue border-b border-blue"
+        className="flex flex-row text-blue border-b border-blue
+        max-sm:hidden"
       >
         Shop Now
         <svg

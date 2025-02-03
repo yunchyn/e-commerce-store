@@ -1,15 +1,17 @@
 import Link from "next/link";
-import { toLowercaseFirstLetters } from "./utilities";
 
-export const ShopLink = ({ category, className = "" }: { category: string; className?: string }) => {
+export const ShopArea = ({ category, className = "" }: { category: string; className?: string }) => {
   return (
-    <Link
-      href={`/shop?category=${toLowercaseFirstLetters(category)}`}
-      className={`absolute flex flex-col gap-3 text-headline5 m-12 cursor-pointer ${className}`}
+    <div
+      className={`absolute flex flex-col gap-3 text-headline5 m-12 cursor-pointer ${className}
+      max-sm:text-headline6 max-sm:m-8 max-sm:gap-1`}
     >
       {category}
       <div className="flex">
-        <span className="flex flex-row items-center gap-1 text-buttonS border-b border-neutral-7">
+        <span
+          className="flex flex-row items-center gap-1 text-buttonS border-b border-neutral-7
+        max-sm:text-buttonXS"
+        >
           Shop Now
           <svg
             width="20"
@@ -42,23 +44,36 @@ export const ShopLink = ({ category, className = "" }: { category: string; class
           </svg>
         </span>
       </div>
-    </Link>
+    </div>
   );
 };
 
 export default function CategoryLinks() {
   return (
-    <div className="w-full flex flex-row gap-6">
-      <div className="relative w-1/2">
-        <ShopLink category="Living Room" />
+    <div
+      className="w-full flex flex-row gap-6
+    max-sm:flex-col max-sm:gap-4"
+    >
+      <Link
+        href="/shop?category=living-room"
+        className="relative w-1/2
+      max-sm:w-full"
+      >
+        <ShopArea category="Living Room" />
         <img
           src="/img/living-room.png"
           alt="living-room"
         />
-      </div>
-      <div className="w-1/2 flex flex-col gap-6">
-        <div className="w-full h-auto relative">
-          <ShopLink
+      </Link>
+      <div
+        className="w-1/2 flex flex-col gap-6
+      max-sm:w-full max-sm:gap-4"
+      >
+        <Link
+          href="/shop?category=bedroom"
+          className="w-full h-auto relative"
+        >
+          <ShopArea
             category="Bedroom"
             className="bottom-0"
           />
@@ -66,9 +81,12 @@ export default function CategoryLinks() {
             src="/img/bedroom.png"
             alt="bedroom"
           />
-        </div>
-        <div className="relative">
-          <ShopLink
+        </Link>
+        <Link
+          href="/shop?category=kitchen"
+          className="relative"
+        >
+          <ShopArea
             category="Kitchen"
             className="bottom-0"
           />
@@ -76,7 +94,7 @@ export default function CategoryLinks() {
             src="/img/kitchen.png"
             alt="kitchen"
           />
-        </div>
+        </Link>
       </div>
     </div>
   );
