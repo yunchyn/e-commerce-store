@@ -1,4 +1,4 @@
-import { IProduct } from "./ProductCard";
+import { IProduct } from "./product-list/ProductCard";
 import { supabase } from "../supabase";
 import { IMember } from "@/app/auth/page";
 

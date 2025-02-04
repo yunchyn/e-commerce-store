@@ -1,7 +1,7 @@
 "use client";
 
-import { Category } from "@/components/ProductCard";
-import ProductList from "@/components/ProductList";
+import { Category } from "@/components/product-list/ProductCard";
+import ProductList from "@/components/product-list/ProductList";
 import { toUppercaseFirstLetters } from "@/components/utilities";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
@@ -20,10 +20,16 @@ export default function Shop() {
   return (
     <div>
       <div className="flex flex-col gap-6">
-        <div className="max-w-[1120px] mx-auto">
+        <div
+          className="max-w-[1120px] mx-auto
+        max-sm:px-8"
+        >
           {/* 배너 */}
           <div className="flex flex-col justify-center items-center">
-            <div className="absolute flex flex-col text-center gap-6">
+            <div
+              className="absolute flex flex-col text-center gap-6
+            max-sm:px-8 max-sm:gap-4"
+            >
               <p className="text-buttonXS font-button flex flex-row gap-4 justify-center items-center">
                 <span className="text-[#605F5F] flex flex-row justify-center items-center gap-2">
                   Home
@@ -45,19 +51,39 @@ export default function Shop() {
                 </span>
                 Shop
               </p>
-              <p className="text-headline3 font-headline">Shop page</p>
-              <p className="text-body1 font-body">Let’s design the place you always imagined.</p>
+              <p
+                className="text-headline3 font-headline
+              max-sm:text-headline4"
+              >
+                Shop page
+              </p>
+              <p
+                className="text-body1 font-body
+              max-sm:text-body2"
+              >
+                Let’s design the place you always imagined.
+              </p>
             </div>
             <img
               src="/img/shop-banner.png"
               alt="banner"
+              className="max-sm:h-[308px] max-sm:object-cover"
             />
           </div>
 
-          <div className="w-full flex flex-row py-16">
+          <div
+            className="w-full flex flex-row py-16
+          max-sm:py-8 max-sm:flex-col"
+          >
             {/* 필터 */}
-            <div className="w-1/4 flex flex-col  gap-8">
-              <div className="flex flex-row items-center gap-2 text-body1Semi font-body-semi text-neutral-7">
+            <div
+              className="w-1/4 flex flex-col gap-8
+            max-sm:w-full max-sm:gap-4 max-sm:pb-4"
+            >
+              <div
+                className="flex flex-row items-center gap-2 text-body1Semi font-body-semi text-neutral-7
+              max-sm:border-t max-sm:border-b max-sm:border-neutral-3 max-sm:py-[10px] max-sm:text-body2Semi"
+              >
                 <svg
                   width="24"
                   height="24"
@@ -76,7 +102,10 @@ export default function Shop() {
               </div>
 
               {/* 카테고리 메뉴 */}
-              <div className="flex flex-col gap-4">
+              <div
+                className="flex flex-col gap-4
+              max-sm:hidden"
+              >
                 <p className="text-neutral-7 text-body2Semi font-body-semi">CATEGORIES</p>
                 <div className="text-[#807E7E] text-caption1 font-body-semi flex flex-col gap-3">
                   {categories.map((category, index) => (
@@ -94,7 +123,10 @@ export default function Shop() {
               </div>
 
               {/* 가격 필터 */}
-              <div className="flex flex-col gap-4">
+              <div
+                className="flex flex-col gap-4
+              max-sm:hidden"
+              >
                 <p className="text-neutral-7 text-body2Semi font-body-semi">PRICE</p>
                 <div className="text-[#807E7E] text-caption1 font-body-semi flex flex-col gap-3">
                   {priceCategories.map((category, index) => {
@@ -115,7 +147,10 @@ export default function Shop() {
             </div>
 
             {/* 제품리스트 */}
-            <div className="flex flex-col justify-end w-3/4">
+            <div
+              className="flex flex-col justify-end w-3/4
+            max-sm:w-full"
+            >
               <ProductList />
             </div>
           </div>

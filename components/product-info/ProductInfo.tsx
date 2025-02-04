@@ -1,12 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { IProduct } from "./ProductCard";
-import { fetchProductById } from "./dataHandler";
-import { StarRating } from "./utilities";
+import { IProduct } from "../product-list/ProductCard";
+import { fetchProductById } from "../dataHandler";
+import { StarRating } from "../utilities";
 import ProductSlider from "./ProductSlider";
-import { AddToCart } from "./AddToCart";
-import { ProductInfoSkeleton } from "./SkeletonComponents";
+import { AddToCart } from "../AddToCart";
+import { ProductInfoSkeleton } from "../SkeletonComponents";
 
 export default function ProductInfo({ id }: { id: number }) {
   const [product, setProduct] = useState<IProduct | null>(null);

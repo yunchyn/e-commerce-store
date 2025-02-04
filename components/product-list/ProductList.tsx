@@ -4,7 +4,7 @@ import { ReactNode, useEffect, useState } from "react";
 import { Category, IProduct, ProductCard } from "./ProductCard";
 import { fetchAllProducts, fetchProductsByCategory } from "@/components/dataHandler";
 import { useSearchParams } from "next/navigation";
-import { toUppercaseFirstLetters } from "./utilities";
+import { toUppercaseFirstLetters } from "../utilities";
 
 export default function ProductList() {
   const searchParams = useSearchParams();
@@ -49,13 +49,22 @@ export default function ProductList() {
 
   return (
     <div className="w-full h-full">
-      <div className="w-full flex flex-row items-center pb-10">
-        <div className="w-1/2 text-body1Semi font-body-semi">
+      <div
+        className="w-full flex flex-row items-center pb-10
+      max-sm:justify-between"
+      >
+        <div
+          className="w-1/2 text-body1Semi font-body-semi
+        max-sm:w-auto max-sm:text-body2Semi"
+        >
           {categoryId === 0 ? "All Rooms" : toUppercaseFirstLetters(categories[categoryId - 1].name)}
         </div>
-        <div className="w-1/2  flex flex-row gap-8 justify-end items-center">
-          <div className="flex flex-row gap-2  text-body2Semi font-body-semi">
-            sort by
+        <div
+          className="w-1/2  flex flex-row gap-8 justify-end items-center
+         max-sm:w-auto max-sm:justify-end"
+        >
+          <div className="flex flex-row gap-2 items-center text-body2Semi font-body-semi">
+            Sort by
             <svg
               width="20"
               height="20"
@@ -72,8 +81,11 @@ export default function ProductList() {
               />
             </svg>
           </div>
-          {/* 정렬옵션 */}
-          <div className="flex flex-row">
+          {/* 데스크탑 정렬옵션 */}
+          <div
+            className="flex flex-row
+          max-sm:hidden"
+          >
             <SortOption
               children={
                 <svg
@@ -147,7 +159,10 @@ export default function ProductList() {
           No products found for the selected category.
         </div>
       ) : (
-        <div className="max-w-[834px] grid grid-cols-2 lg:grid-cols-3 gap-6">
+        <div
+          className="max-w-[834px] grid grid-cols-2 lg:grid-cols-3 gap-6
+        max-sm:gap-x-2 max-sm:gap-y-4 "
+        >
           {products.map((product) => (
             <ProductCard
               key={product.product_id}

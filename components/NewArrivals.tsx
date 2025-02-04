@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import ProductCarousel from "./ProductCarousel";
-import { IProduct } from "./ProductCard";
+import ProductCarousel from "./product-list/ProductCarousel";
+import { IProduct } from "./product-list/ProductCard";
 import { fetchNewProducts } from "@/components/dataHandler";
 import Link from "next/link";
 
