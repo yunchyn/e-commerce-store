@@ -19,7 +19,7 @@ export function CartItemSkeleton() {
 export function ProductInfoSkeleton() {
   return (
     <div className="w-full flex flex-row gap-16 pb-16 border-b border-neutral-3 animate-pulse">
-      <div className="w-1/2 max-w-[547px] bg-gray-200 h-[728px] rounded"></div>
+      <div className="min-w-[547px] bg-gray-200 h-[728px] rounded"></div>
       <div className="relative w-1/2 flex flex-col gap-4">
         <div className="h-6 w-32 bg-gray-200 rounded"></div>
         <div className="h-[44px] w-2/3 bg-gray-200 rounded"></div>
@@ -41,6 +41,33 @@ export function ProductInfoSkeleton() {
           <div className="w-full h-[45px] flex justify-center items-center gap-2 bg-gray-200 rounded-lg py-[10px]"></div>
         </div>
       </div>
+    </div>
+  );
+}
+
+export function ProductCardSkeleton() {
+  return (
+    <div className="flex flex-col gap-1 text-neutral-7 max-w-[262px] max-sm:max-w-[231px]">
+      <div
+        className="max-w-[262px] max-h-[349px] w-full h-full bg-gray-200 rounded-lg relative
+  max-sm:max-w-[231px] max-sm:max-h-[307px] aspect-[3/4]"
+      >
+        <div className="w-full h-full bg-gray-200 rounded-lg" />
+      </div>
+
+      <div className="pt-3">
+        <div className="h-4 bg-gray-200 rounded w-1/2" />
+      </div>
+
+      <div
+        className="h-4 bg-gray-200 rounded w-3/4
+      max-sm:h-3 max-sm:w-2/3"
+      />
+
+      <div
+        className="h-4 bg-gray-200 rounded w-1/2
+      max-sm:h-3 max-sm:w-1/3"
+      />
     </div>
   );
 }

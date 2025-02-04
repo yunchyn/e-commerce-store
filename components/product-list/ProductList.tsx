@@ -5,6 +5,7 @@ import { Category, IProduct, ProductCard } from "./ProductCard";
 import { fetchAllProducts, fetchProductsByCategory } from "@/components/dataHandler";
 import { useSearchParams } from "next/navigation";
 import { toUppercaseFirstLetters } from "../utilities";
+import { ProductCardSkeleton } from "../SkeletonComponents";
 
 export default function ProductList() {
   const searchParams = useSearchParams();
@@ -18,6 +19,7 @@ export default function ProductList() {
   ];
   const categoryId = categories.find((cat) => cat.name === (searchParams.get("category") || "all rooms"))?.id || 0;
   const [products, setProducts] = useState<IProduct[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const SortOption = ({ children }: { children: ReactNode }) => (
     <div
@@ -30,6 +32,7 @@ export default function ProductList() {
   );
 
   useEffect(() => {
+    setIsLoading(true);
     const loadProducts = async () => {
       let fetchedProducts = categoryId === 0 ? await fetchAllProducts() : await fetchProductsByCategory(categoryId);
 
@@ -42,6 +45,7 @@ export default function ProductList() {
       }
 
       setProducts(fetchedProducts);
+      setIsLoading(false);
     };
 
     loadProducts();
@@ -154,7 +158,16 @@ export default function ProductList() {
         </div>
       </div>
 
-      {products.length === 0 ? (
+      {isLoading ? (
+        <div
+          className="max-w-[834px] grid grid-cols-2 lg:grid-cols-3 gap-6
+        max-sm:gap-x-2 max-sm:gap-y-4 "
+        >
+          {Array.from({ length: 6 }).map((_, index) => (
+            <ProductCardSkeleton key={index} />
+          ))}
+        </div>
+      ) : products.length === 0 ? (
         <div className="h-2/3 flex justify-center items-center text-neutral-4 font-body">
           No products found for the selected category.
         </div>
