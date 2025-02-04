@@ -1,6 +1,6 @@
 import BreadCrumb from "@/components/BreadCrumb";
-import ProductInfo from "@/components/ProductInfo";
-import ProductReviews from "@/components/ProductReviews";
+import ProductInfo from "@/components/product-info/ProductInfo";
+import ProductReviews from "@/components/product-info/ProductReviews";
 
 export default async function ProductDetail({ params }: { params: Promise<{ product_id: number }> }) {
   const productId = (await params).product_id;

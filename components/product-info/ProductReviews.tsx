@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { StarRating } from "./utilities";
-import { fetchReviewsByProduct, IReview } from "./dataHandler";
+import { StarRating } from "../utilities";
+import { fetchReviewsByProduct, IReview } from "../dataHandler";
 import { supabase } from "@/supabase";
 
 const Review = ({ review }: { review: IReview }) => {

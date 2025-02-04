@@ -1,4 +1,5 @@
-import { IProduct, ProductCard } from "./ProductCard";
+import { CarouselCard } from "./CarouselCard";
+import { IProduct } from "./ProductCard";
 
 interface IProductCarousel {
   products?: IProduct[];
@@ -15,7 +16,7 @@ export default function ProductCarousel({ products = [] }: IProductCarousel) {
       max-sm:gap-4"
       >
         {products.map((product) => (
-          <ProductCard
+          <CarouselCard
             key={product.product_id}
             {...product}
           />
