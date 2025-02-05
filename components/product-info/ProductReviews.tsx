@@ -1,30 +1,39 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { StarRating } from "../utilities";
 import { fetchReviewsByProduct, IReview } from "../dataHandler";
 import { supabase } from "@/supabase";
 
 const Review = ({ review }: { review: IReview }) => {
   return (
-    <div className="flex flex-row gap-10 pb-10 border-b border-neutral-3">
+    <div
+      className="border-b border-neutral-3
+    max-sm:flex-col max-sm:pb-10"
+    >
       <div
-        className="w-[72px] h-[72px] bg-neutral-5 rounded-full
-      flex-shrink-0"
+        className="flex flex-row gap-10 pb-10
+      max-sm:gap-4 max-sm:pb-4"
       >
-        {review.member_id.profile_pic && (
-          <img
-            src={review.member_id.profile_pic}
-            alt="Profile"
-            className="w-full h-full object-cover rounded-full"
-          />
-        )}
+        <div
+          className="w-[72px] h-[72px] bg-neutral-5 rounded-full
+      flex-shrink-0 flex"
+        >
+          {review.member_id.profile_pic && (
+            <img
+              src={review.member_id.profile_pic}
+              alt="Profile"
+              className="w-full h-full object-cover rounded-full"
+            />
+          )}
+        </div>
+        <div className="flex flex-col gap-4">
+          <div className="text-body1Semi font-body-semi">{review.member_id.name}</div>
+          <StarRating rating={review.rate} />
+          <div className="text-body2 font-body text-neutral-5 max-sm:hidden">{review.content}</div>
+        </div>
       </div>
-      <div className="flex flex-col gap-4">
-        <div className="text-body1Semi font-body-semi">{review.member_id.name}</div>
-        <StarRating rating={review.rate} />
-        <div className="text-body2 font-body text-neutral-5">{review.content}</div>
-      </div>
+      <div className="text-body2 font-body text-neutral-5 hidden max-sm:block">{review.content}</div>
     </div>
   );
 };
@@ -66,6 +75,18 @@ export default function ProductReviews({ id }: { id: number }) {
   const [content, setContent] = useState("");
   const [rating, setRating] = useState(0);
   const [error, setError] = useState("");
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
+
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setContent(e.target.value);
+
+    // Textarea 높이 조절
+    const textArea = textAreaRef.current;
+    if (textArea) {
+      textArea.style.height = "auto";
+      textArea.style.height = `${textArea.scrollHeight}px`;
+    }
+  };
 
   useEffect(() => {
     async function fetchReviews() {
@@ -82,8 +103,11 @@ export default function ProductReviews({ id }: { id: number }) {
     if (rating === 0) {
       setError("Please select a rating.");
       return;
-    } else if (content === "") {
+    } else if (content.trim() === "") {
       setError("Please write your review.");
+      return;
+    } else if (content.length > 450) {
+      setError("Review cannot exceed 450 characters.");
       return;
     }
 
@@ -134,8 +158,13 @@ export default function ProductReviews({ id }: { id: number }) {
   };
 
   return (
-    <div className="flex flex-col pt-16">
-      <div className="text-headline6 font-headline">Customer Reviews</div>
+    <div className="flex flex-col pt-16 pb-20">
+      <div
+        className="text-headline6 font-headline
+      max-sm:text-headline7"
+      >
+        Customer Reviews
+      </div>
 
       {/* 리뷰작성란 */}
       <form
@@ -150,19 +179,44 @@ export default function ProductReviews({ id }: { id: number }) {
         </div>
         <div className="relative w-full flex flex-col">
           <textarea
-            className="bg-neutral-1 border-2 border-neutral-3 rounded-2xl px-6 py-4 resize-none"
+            className="bg-neutral-1 border-2 border-neutral-3 rounded-2xl px-6 py-4 resize-none pr-52 font-caption
+            overflow-y-hidden
+            max-sm:text-caption1 max-sm:pr-14"
+            ref={textAreaRef}
+            onChange={handleChange}
             value={content}
-            onChange={(e) => setContent(e.target.value)}
             placeholder="Write your review here."
           />
-          <input
+          <button
             type="submit"
-            value="Write Review"
-            className="absolute bottom-5 right-5 cursor-pointer bg-neutral-7 
-            text-white text-buttonS font-button px-10 py-2 rounded-[80px]"
-          />
+            className="absolute right-5 top-1/2 transform -translate-y-1/2 cursor-pointer bg-neutral-7 
+          text-white text-buttonS font-button px-10 py-2 rounded-[80px]
+            max-sm:p-1 max-sm:right-4"
+          >
+            <span className="max-sm:hidden">Write Review</span>
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="hidden max-sm:block"
+            >
+              <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M14.0909 7.26521C14.4968 6.8906 15.1294 6.9159 15.504 7.32172L18.7348 10.8217C19.0884 11.2047 19.0884 11.7952 18.7348 12.1782L15.504 15.6783C15.1294 16.0841 14.4968 16.1094 14.091 15.7348C13.6851 15.3602 13.6598 14.7276 14.0344 14.3217L15.716 12.5L6 12.5C5.44771 12.5 5 12.0523 5 11.5C5 10.9477 5.44771 10.5 6 10.5L15.716 10.5L14.0344 8.67829C13.6598 8.27247 13.6851 7.63981 14.0909 7.26521Z"
+                fill="#FEFEFE"
+              />
+            </svg>
+          </button>
         </div>
-        <p className="pt-2 pl-[3px]">{error}</p>
+        <p
+          className="pt-2 pl-[3px] font-caption
+        max-sm:text-caption1"
+        >
+          {error}
+        </p>
       </form>
 
       {/* 정렬기준 추가예정 */}

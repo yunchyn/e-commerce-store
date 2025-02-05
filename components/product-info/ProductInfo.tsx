@@ -37,9 +37,18 @@ export default function ProductInfo({ id }: { id: number }) {
   if (!product) return;
 
   return (
-    <div className="flex flex-row gap-16 pb-16 border-b border-neutral-3">
-      <div className="relative min-w-1/2 max-w-[547px]">
-        <div className="absolute top-0 left-0 flex flex-col gap-2 p-8 z-10 outline-none">
+    <div
+      className="flex flex-row gap-16 pb-16 border-b border-neutral-3
+    max-sm:flex-col max-sm:gap-4"
+    >
+      <div
+        className="relative w-1/2 max-w-[547px]
+      max-sm:w-full"
+      >
+        <div
+          className="absolute top-0 left-0 flex flex-col gap-2 p-8 z-10 outline-none
+        max-sm:p-6"
+        >
           {product.is_new && <div className="bg-white px-[18px] py-2 rounded text-hairline1 font-hairline">NEW</div>}
           {product.sale_price && (
             <div className="bg-green text-white px-[18px] py-2 rounded text-hairline1 font-hairline">SALE</div>
@@ -48,7 +57,10 @@ export default function ProductInfo({ id }: { id: number }) {
         <ProductSlider image={product.image} />
       </div>
 
-      <div className="w-1/2 flex flex-col gap-4 relative">
+      <div
+        className="w-1/2 flex flex-col gap-4 relative
+      max-sm:py-4 max-sm:w-full"
+      >
         <div className="flex flex-row items-center text-caption2 font-caption gap-3">
           <StarRating rating={product.rating} />
         </div>
@@ -111,9 +123,18 @@ export default function ProductInfo({ id }: { id: number }) {
         </div>
 
         {/* 구매란 */}
-        <div className="flex flex-col w-full gap-4 absolute bottom-2">
-          <div className="w-full flex flex-row gap-6">
-            <div className="w-1/4 px-2 grid grid-cols-3 place-items-center bg-[#F5F5F5] rounded-lg">
+        <div
+          className="flex flex-col w-full gap-4 absolute bottom-2
+        max-sm:relative max-sm:pt-12 max-sm:gap-3"
+        >
+          <div
+            className="w-full flex flex-row gap-6
+          max-sm:gap-3"
+          >
+            <div
+              className="w-1/4 px-2 grid grid-cols-3 place-items-center bg-[#F5F5F5] rounded-lg
+            max-sm:px-1"
+            >
               <button onClick={() => setQuantity((prev) => Math.max(1, prev - 1))}>
                 <svg
                   width="20"
@@ -151,7 +172,8 @@ export default function ProductInfo({ id }: { id: number }) {
             </div>
             <div
               className="w-3/4 flex flex-row justify-center items-center gap-2
-              py-[10px] border border-neutral-7 rounded-lg"
+              py-[10px] border border-neutral-7 rounded-lg
+              max-sm:py-[6px] max-sm:text-buttonS max-sm:h-[41px]"
             >
               <svg
                 width="25"
@@ -172,7 +194,8 @@ export default function ProductInfo({ id }: { id: number }) {
           </div>
           <button
             className="w-full flex justify-center items-center gap-2
-             bg-neutral-7 text-white rounded-lg py-[10px] text-buttonM font-button"
+             bg-neutral-7 text-white rounded-lg py-[10px] text-buttonM font-button
+             max-sm:py-[6px] max-sm:text-buttonS max-sm:h-[41px]"
             onClick={(e) => {
               e.preventDefault();
               AddToCart(id, quantity, color);
