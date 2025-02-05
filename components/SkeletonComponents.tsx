@@ -18,9 +18,18 @@ export function CartItemSkeleton() {
 
 export function ProductInfoSkeleton() {
   return (
-    <div className="w-full flex flex-row gap-16 pb-16 border-b border-neutral-3 animate-pulse">
-      <div className="min-w-[547px] bg-gray-200 h-[728px] rounded"></div>
-      <div className="relative w-1/2 flex flex-col gap-4">
+    <div
+      className="w-full flex flex-row gap-16 pb-16 border-b border-neutral-3 animate-pulse
+    max-sm:flex-col max-sm:gap-4"
+    >
+      <div
+        className="min-w-[547px] bg-gray-200 h-[728px] rounded
+      max-sm:w-full max-sm:min-w-0 max-sm:h-auto max-sm:aspect-[547/728]"
+      ></div>
+      <div
+        className="relative w-1/2 flex flex-col gap-4
+      max-sm:w-full max-sm:py-4"
+      >
         <div className="h-6 w-32 bg-gray-200 rounded"></div>
         <div className="h-[44px] w-2/3 bg-gray-200 rounded"></div>
         <div className="h-40 w-full bg-gray-200 rounded"></div>
@@ -28,17 +37,28 @@ export function ProductInfoSkeleton() {
         <div className="h-12 w-full mt-10 bg-gray-200 rounded"></div>
 
         {/* 구매란 */}
-        <div className="flex flex-col w-full gap-4 absolute bottom-2">
-          <div className="w-full h-[45px] flex flex-row gap-6">
-            <div className="w-1/4 px-2 grid grid-cols-3 place-items-center bg-gray-200 rounded-lg">
-              <div></div>
-            </div>
+        <div
+          className="flex flex-col w-full gap-4 absolute bottom-2
+        max-sm:relative max-sm:pt-12 max-sm:gap-3"
+        >
+          <div
+            className="w-full h-[45px] flex flex-row gap-6
+          max-sm:gap-3"
+          >
+            <div
+              className="w-1/4 px-2 grid grid-cols-3 place-items-center bg-gray-200 rounded-lg
+            max-sm:h-[41px]"
+            ></div>
             <div
               className="w-3/4 flex flex-row justify-center items-center gap-2
-                      py-[10px] border bg-gray-200 rounded-lg"
+                      py-[10px] border bg-gray-200 rounded-lg
+                      max-sm:py-[6px] max-sm:h-[41px]"
             ></div>
           </div>
-          <div className="w-full h-[45px] flex justify-center items-center gap-2 bg-gray-200 rounded-lg py-[10px]"></div>
+          <div
+            className="w-full h-[45px] flex justify-center items-center gap-2 bg-gray-200 rounded-lg py-[10px]
+          max-sm:py-[6px] max-sm:text-buttonS max-sm:h-[41px]"
+          ></div>
         </div>
       </div>
     </div>
