@@ -52,10 +52,13 @@ export default function ProductList() {
   }, [categoryId, priceRange]);
 
   return (
-    <div className="w-full h-full">
+    <div
+      className="w-full h-full
+    max-sm:pb-12"
+    >
       <div
         className="w-full flex flex-row items-center pb-10
-      max-sm:justify-between"
+      max-sm:justify-between max-sm:mt-3 max-sm:pt-3 max-sm:pb-3 max-sm:mb-12 max-sm:border-t max-sm:border-b max-sm:border-neutral-3"
       >
         <div
           className="w-1/2 text-body1Semi font-body-semi
@@ -168,7 +171,10 @@ export default function ProductList() {
           ))}
         </div>
       ) : products.length === 0 ? (
-        <div className="h-2/3 flex justify-center items-center text-neutral-4 font-body">
+        <div
+          className="h-2/3 flex justify-center items-center text-neutral-4 font-body
+        max-sm:text-center max-sm:h-40"
+        >
           No products found for the selected category.
         </div>
       ) : (

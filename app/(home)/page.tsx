@@ -1,6 +1,7 @@
 import CategoryLinks from "@/components/CategoryLinks";
 import BannerSlider from "@/components/BannerSlider";
 import NewArrivals from "@/components/NewArrivals";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -210,7 +211,10 @@ export default function Home() {
               It’s more affordable than ever to give every room in your home a stylish makeover
             </p>
             <div className="flex">
-              <span className="flex flex-row items-center gap-1 text-buttonXS font-button border-b border-neutral-7">
+              <Link
+                href="/sale"
+                className="flex flex-row items-center gap-1 text-buttonXS font-button border-b border-neutral-7"
+              >
                 Shop Now
                 <svg
                   width="20"
@@ -241,7 +245,7 @@ export default function Home() {
                     strokeLinejoin="round"
                   />
                 </svg>
-              </span>
+              </Link>
             </div>
           </div>
         </div>

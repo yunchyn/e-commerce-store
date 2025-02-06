@@ -155,6 +155,11 @@ export default function ProductReviews({ id }: { id: number }) {
     setContent("");
     setRating(0);
     setError("");
+
+    const textArea = textAreaRef.current;
+    if (textArea) {
+      textArea.style.height = "auto";
+    }
   };
 
   return (

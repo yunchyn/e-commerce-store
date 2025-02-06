@@ -2,11 +2,11 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { fetchCartByMemberId, ICartProduct } from "./dataHandler";
+import { fetchCartByMemberId, ICartProduct } from "../dataHandler";
 import { supabase } from "@/supabase";
 import CartSummary from "./CartSummary";
 import CartItem from "./CartItem";
-import { CartItemSkeleton } from "./SkeletonComponents";
+import { CartItemSkeleton } from "../SkeletonComponents";
 
 export default function CartList() {
   const router = useRouter();
@@ -70,16 +70,20 @@ export default function CartList() {
           <p>Subtotal</p>
         </div>
 
-        {loading
-          ? Array.from({ length: 3 }).map((_, index) => <CartItemSkeleton key={index} />)
-          : cartProducts.map((product) => (
-              <CartItem
-                key={product.cart_id}
-                product={product}
-                handleRemove={handleRemove}
-                onQuantityChange={handleQuantityChange}
-              />
-            ))}
+        {loading ? (
+          Array.from({ length: 3 }).map((_, index) => <CartItemSkeleton key={index} />)
+        ) : cartProducts.length === 0 ? (
+          <div className="text-center py-48 text-body2 font-body text-neutral-4">Your cart is empty.</div>
+        ) : (
+          cartProducts.map((product) => (
+            <CartItem
+              key={product.cart_id}
+              product={product}
+              handleRemove={handleRemove}
+              onQuantityChange={handleQuantityChange}
+            />
+          ))
+        )}
       </div>
 
       <CartSummary subtotal={subtotal} />
