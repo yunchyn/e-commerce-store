@@ -1,9 +1,22 @@
 "use client";
 
-import CategoryDropdown from "@/components/CategoryDropdown";
+import { Category } from "@/components/product-list/ProductCard";
 import ProductList from "@/components/product-list/ProductList";
+import { toUppercaseFirstLetters } from "@/components/utilities";
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 
-export default function Shop() {
+export default function Sale() {
+  const categories: Category[] = ["all rooms", "living room", "bedroom", "kitchen", "bathroom"];
+  const priceCategories = [
+    { label: "All Price", min: 0, max: Infinity },
+    { label: "$0.00 - 99.99", min: 0, max: 99.99 },
+    { label: "$100.00 - 199.99", min: 100, max: 199.99 },
+    { label: "$200.00 - 299.99", min: 200, max: 299.99 },
+    { label: "$300.00+", min: 300, max: Infinity },
+  ];
+  const searchParams = useSearchParams();
+
   return (
     <div>
       <div className="flex flex-col gap-6">
@@ -88,7 +101,49 @@ export default function Shop() {
                 Filter
               </div>
 
-              <CategoryDropdown />
+              {/* 카테고리 메뉴 */}
+              <div
+                className="flex flex-col gap-4
+              max-sm:hidden"
+              >
+                <p className="text-neutral-7 text-body2Semi font-body-semi">CATEGORIES</p>
+                <div className="text-[#807E7E] text-caption1 font-body-semi flex flex-col gap-3">
+                  {categories.map((category, index) => (
+                    <Link
+                      href={`/shop?category=${category}`}
+                      key={index}
+                    >
+                      <p className="hover:text-neutral-7 border-b-2 border-transparent hover:border-neutral-7 inline-block">
+                        {" "}
+                        {toUppercaseFirstLetters(category)}
+                      </p>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
+              {/* 가격 필터 */}
+              <div
+                className="flex flex-col gap-4
+              max-sm:hidden"
+              >
+                <p className="text-neutral-7 text-body2Semi font-body-semi">PRICE</p>
+                <div className="text-[#807E7E] text-caption1 font-body-semi flex flex-col gap-3">
+                  {priceCategories.map((category, index) => {
+                    const currentCategory = searchParams.get("category") || "";
+                    return (
+                      <Link
+                        key={index}
+                        href={`/shop?category=${currentCategory}&priceRange=${category.min}-${category.max}`}
+                      >
+                        <p className="hover:text-neutral-7 border-b-2 border-transparent hover:border-neutral-7 inline-block">
+                          {category.label}
+                        </p>
+                      </Link>
+                    );
+                  })}
+                </div>
+              </div>
             </div>
 
             {/* 제품리스트 */}

@@ -116,16 +116,26 @@ export default function SignUp() {
   };
 
   return (
-    <div className="flex flex-row max-w-[1120px] mx-auto">
-      <div className="relative w-1/2">
+    <div
+      className="flex flex-row max-w-[1120px] mx-auto
+    max-sm:flex-col"
+    >
+      <div
+        className="relative w-1/2
+      max-sm:w-full"
+      >
         <p className="absolute w-full flex justify-center pt-6 text-[22px]">3legant.</p>
         <img
           src="/img/signup.png"
           alt="signup"
-          className="w-full h-screen object-cover"
+          className="w-full h-screen object-cover
+          max-sm:w-screen max-sm:h-auto"
         />
       </div>
-      <div className="w-1/2 flex justify-center items-center">
+      <div
+        className="w-1/2 flex justify-center items-center
+      max-sm:w-full max-sm:py-10 max-sm:px-8"
+      >
         <div className="flex w-[372px] flex-col gap-8 max-w-[456px]">
           <div className="flex flex-col gap gap-6">
             <p className="text-headline4 font-headline">{variant === "signIn" ? "Sign In" : "Sign Up"}</p>

@@ -27,7 +27,7 @@ export default function NotificationBar() {
       </svg>
       30% off storewide — Limited time!
       <Link
-        href="/"
+        href="/sale"
         className="flex flex-row text-blue border-b border-blue
         max-sm:hidden"
       >

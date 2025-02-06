@@ -8,7 +8,10 @@ import "slick-carousel/slick/slick-theme.css";
 const CustomPrevArrow = (props: any) => {
   const { onClick } = props;
   return (
-    <div className="absolute left-4 top-1/2 transform -translate-y-1/2 cursor-pointer z-10">
+    <div
+      className="absolute left-4 top-1/2 transform -translate-y-1/2 cursor-pointer z-10
+    max-sm:left-1"
+    >
       <svg
         width="72"
         height="73"
@@ -98,7 +101,10 @@ const CustomPrevArrow = (props: any) => {
 const CustomNextArrow = (props: any) => {
   const { onClick } = props;
   return (
-    <div className="absolute right-4 top-1/2 transform -translate-y-1/2 z-10">
+    <div
+      className="absolute right-4 top-1/2 transform -translate-y-1/2 z-10
+    max-sm:right-1"
+    >
       <svg
         width="72"
         height="73"

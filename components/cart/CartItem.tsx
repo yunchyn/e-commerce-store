@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ICartProduct } from "./dataHandler";
+import { ICartProduct } from "../dataHandler";
 import { useState } from "react";
 import { supabase } from "@/supabase";
 

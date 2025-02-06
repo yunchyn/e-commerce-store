@@ -132,7 +132,7 @@ export default function NavigationBar() {
             </div>
             {/* 사용자 */}
             <div
-              // onClick={isUserLoggedIn}
+              onClick={isUserLoggedIn}
               className="cursor-pointer
               max-sm:hidden"
             >
