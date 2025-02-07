@@ -1,7 +1,8 @@
 "use client";
 
+import WishList from "@/components/user/WishList";
 import { toUppercaseFirstLetters } from "@/components/utilities";
-import WishList from "@/components/WishList";
+
 import { supabase } from "@/supabase";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -9,6 +10,7 @@ import { useEffect, useState } from "react";
 
 export default function User() {
   const [userName, setUserName] = useState("");
+  const [userId, setUserId] = useState("");
   const searchParams = useSearchParams();
   const router = useRouter();
   const categories: string[] = ["account", "orders", "wishlist", "log out"];
@@ -21,6 +23,7 @@ export default function User() {
       } = await supabase.auth.getUser();
       if (user) {
         setUserName(user.user_metadata?.name || "Unknown");
+        setUserId(user.id);
       }
     };
 
@@ -69,7 +72,7 @@ export default function User() {
           </div>
         </div>
         {/* 카테고리별 섹션 */}
-        <WishList />
+        <WishList userId={userId} />
       </div>
     </div>
   );

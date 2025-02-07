@@ -130,3 +130,50 @@ export async function fetchCartByMemberId(member_id: string): Promise<ICartProdu
     };
   });
 }
+
+export interface IWishProduct {
+  wishlist_id: number;
+  member_id: number;
+  product_id: number;
+  colors: string[];
+  name: string;
+  price: number;
+  sale_price?: number;
+  image?: string;
+}
+
+export async function fetchWishlistByMemberId(member_id: string): Promise<IWishProduct[] | null> {
+  const { data, error } = await supabase
+    .from("wishlist")
+    .select(
+      ` 
+      wishlist_id,
+      member_id,
+      product_id,
+      product:product_id (
+        name,
+        price,
+        sale_price,
+        image,
+        colors
+      )
+    `
+    )
+    .eq("member_id", member_id);
+
+  if (error) {
+    console.error("Error fetching wishlist:", error);
+    return null;
+  }
+
+  console.log(data);
+
+  return data.map((wishItem) => {
+    const product = Array.isArray(wishItem.product) ? wishItem.product[0] : wishItem.product;
+
+    return {
+      ...wishItem,
+      ...product,
+    };
+  });
+}

@@ -25,6 +25,7 @@ export default function CartList() {
         data: { session },
       } = await supabase.auth.getSession();
       if (!session) {
+        alert("Login is required.");
         router.push("/auth");
         return;
       }
