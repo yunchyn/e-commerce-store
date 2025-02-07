@@ -48,6 +48,20 @@ export default function ProductList() {
       }
 
       setProducts(fetchedProducts);
+
+      // 이미지 로딩까지 완료된 후에 보여줌
+      const imageLoadPromises = fetchedProducts.map((product) => {
+        return new Promise<void>((resolve) => {
+          if (!product.image) return resolve();
+          const img = new Image();
+          img.src = product.image;
+          img.onload = () => resolve();
+          img.onerror = () => resolve();
+        });
+      });
+
+      await Promise.all(imageLoadPromises);
+
       setIsLoading(false);
     };
 

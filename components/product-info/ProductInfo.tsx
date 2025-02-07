@@ -7,6 +7,7 @@ import { StarRating } from "../utilities";
 import ProductSlider from "./ProductSlider";
 import { AddToCart } from "../AddToCart";
 import { ProductInfoSkeleton } from "../SkeletonComponents";
+import { AddToWishlist } from "../AddToWishList";
 
 export default function ProductInfo({ id }: { id: number }) {
   const [product, setProduct] = useState<IProduct | null>(null);
@@ -170,10 +171,14 @@ export default function ProductInfo({ id }: { id: number }) {
                 </svg>
               </button>
             </div>
-            <div
+            <button
               className="w-3/4 flex flex-row justify-center items-center gap-2
               py-[10px] border border-neutral-7 rounded-lg
               max-sm:py-[6px] max-sm:text-buttonS max-sm:h-[41px]"
+              onClick={(e) => {
+                e.preventDefault();
+                AddToWishlist(id);
+              }}
             >
               <svg
                 width="25"
@@ -190,7 +195,7 @@ export default function ProductInfo({ id }: { id: number }) {
                 />
               </svg>
               Wishlist
-            </div>
+            </button>
           </div>
           <button
             className="w-full flex justify-center items-center gap-2
