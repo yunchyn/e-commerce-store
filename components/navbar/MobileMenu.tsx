@@ -2,9 +2,14 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { Category } from "../product-list/ProductCard";
+import { toUppercaseFirstLetters } from "../utilities";
+
+const categories: Category[] = ["all rooms", "living room", "bedroom", "kitchen", "bathroom"];
 
 export default function MobileMenu() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isShopOpen, setIsShopOpen] = useState(false);
 
   return (
     <div className="block sm:hidden">
@@ -91,32 +96,69 @@ export default function MobileMenu() {
             </svg>
           </div>
 
-          <div className="mt-4 space-y-2 text-buttonXS font-button">
+          <div className="mt-4 text-buttonXS font-button">
             <Link
               href="/"
               onClick={() => setIsOpen(false)}
-              className="block pt-2 pb-4 text-black border-b border-neutral-3"
+              className="block pt-4 pb-4 text-black border-b border-neutral-3"
             >
               Home
             </Link>
-            <Link
-              href="/shop"
-              onClick={() => setIsOpen(false)}
-              className="block pt-2 pb-4 text-black border-b border-neutral-3"
+
+            <button
+              onClick={() => setIsShopOpen(!isShopOpen)}
+              className="w-full text-left pt-4 pb-4 text-black border-b border-neutral-3 flex justify-between items-center"
             >
               Shop
-            </Link>
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 20 20"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M5 7L10 12L15 7"
+                  stroke="black"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
+
+            <div
+              className={`w-full transition-[max-height] duration-500 ease-in-out overflow-hidden ${
+                isShopOpen ? "max-h-96" : "max-h-0"
+              }`}
+            >
+              {categories.map((category) => (
+                <Link
+                  key={category}
+                  href={`/shop?category=${category}`}
+                  onClick={() => {
+                    setIsShopOpen(false);
+                    setIsOpen(false);
+                  }}
+                  className="block pt-3 pb-3 text-black  px-4 py-2"
+                >
+                  {toUppercaseFirstLetters(category)}
+                </Link>
+              ))}
+            </div>
+
             <Link
               href="/sale"
               onClick={() => setIsOpen(false)}
-              className="block pt-2 pb-4 text-black border-b border-neutral-3"
+              className={`block pt-4 pb-4 text-black border-b ${isShopOpen ? "border-t" : ""} border-neutral-3
+                `}
             >
               Sale
             </Link>
             <Link
               href="/contact-us"
               onClick={() => setIsOpen(false)}
-              className="block pt-2 pb-4 text-black border-b border-neutral-3"
+              className="block pt-4 pb-4 text-black border-b border-neutral-3"
             >
               Contact Us
             </Link>

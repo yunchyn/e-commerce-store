@@ -1,10 +1,10 @@
 "use client";
 
-import { ChangeEvent, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Category } from "./product-list/ProductCard";
-import { toUppercaseFirstLetters } from "./utilities";
+import { Category } from "./ProductCard";
+import { toUppercaseFirstLetters } from "../utilities";
 
 const categories: Category[] = ["all rooms", "living room", "bedroom", "kitchen", "bathroom"];
 const priceCategories = [
@@ -17,53 +17,62 @@ const priceCategories = [
 
 type MenuType = "category" | "price";
 
-interface DesktopMenuProps {
-  items: (Category | { label: string; min: number; max: number })[];
+type ItemType = Category | { label: string; min: number; max: number };
+
+const DesktopMenu = ({
+  items,
+  searchParams,
+  type,
+}: {
+  items: ItemType[];
   searchParams: URLSearchParams;
   type: MenuType;
-}
-
-const DesktopMenu: React.FC<DesktopMenuProps> = ({ items, searchParams, type }) => (
+}) => (
   <div className="text-[#807E7E] text-caption1 font-body-semi flex flex-col gap-3 max-sm:hidden">
-    {items.map((item, index) => (
-      <Link
-        key={index}
-        href={
-          type === "category"
-            ? `/shop?category=${item as Category}`
-            : `/shop?category=${searchParams.get("category") || ""}&priceRange=${
-                (item as { label: string; min: number; max: number }).min
-              }-${(item as { label: string; min: number; max: number }).max}`
-        }
-      >
-        <p className="hover:text-neutral-7 border-b-2 border-transparent hover:border-neutral-7 inline-block">
-          {toUppercaseFirstLetters((item as { label: string }).label || (item as Category))}
-        </p>
-      </Link>
-    ))}
+    {items.map((item, index) => {
+      const isCategory = type === "category";
+      const value = isCategory
+        ? (item as Category)
+        : `${(item as { min: number; max: number }).min}-${(item as { min: number; max: number }).max}`;
+      const href = `/shop?category=${isCategory ? value : searchParams.get("category") || ""}&priceRange=${
+        isCategory ? "" : value
+      }`;
+      return (
+        <Link
+          key={index}
+          href={href}
+        >
+          <p className="hover:text-neutral-7 border-b-2 border-transparent hover:border-neutral-7 inline-block">
+            {toUppercaseFirstLetters((item as { label: string }).label || (item as Category))}
+          </p>
+        </Link>
+      );
+    })}
   </div>
 );
 
-interface MobileDropdownProps {
-  items: (Category | { label: string; min: number; max: number })[];
-  handleChange: (e: ChangeEvent<HTMLSelectElement>) => void;
-  selectedValue?: string;
-  type: MenuType;
-  isOpen: boolean;
-  setIsOpenDropdown: () => void;
-}
-
-const MobileDropdown: React.FC<MobileDropdownProps> = ({
+const MobileDropdown = ({
   items,
-  handleChange,
   selectedValue,
   type,
   isOpen,
   setIsOpenDropdown,
+}: {
+  items: ItemType[];
+  selectedValue: string;
+  type: MenuType;
+  isOpen: boolean;
+  setIsOpenDropdown: () => void;
 }) => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
   const handleSelect = (value: string) => {
-    handleChange({ target: { value } } as ChangeEvent<HTMLSelectElement>);
     setIsOpenDropdown();
+    const isCategory = type === "category";
+    const category = isCategory ? value : searchParams.get("category") || "";
+    const priceRange = isCategory ? "" : value;
+    router.push(`/shop?category=${category}&priceRange=${priceRange}`);
   };
 
   return (
@@ -72,7 +81,7 @@ const MobileDropdown: React.FC<MobileDropdownProps> = ({
         className="w-full border-2 border-neutral-4 rounded-lg px-4 py-2 bg-white text-neutral-7 cursor-pointer flex justify-between items-center"
         onClick={setIsOpenDropdown}
       >
-        <span>{selectedValue || "All Room"}</span>
+        <span>{selectedValue}</span>
         <svg
           width="24"
           height="24"
@@ -88,16 +97,13 @@ const MobileDropdown: React.FC<MobileDropdownProps> = ({
           />
         </svg>
       </div>
-
       {isOpen && (
         <ul className="absolute w-full mt-2 bg-white border border-neutral-3 rounded-lg shadow-lg max-h-60 overflow-y-auto z-10">
           {items.map((item, index) => {
             const value =
               type === "category"
                 ? (item as Category)
-                : `${(item as { label: string; min: number; max: number }).min}-${
-                    (item as { label: string; min: number; max: number }).max
-                  }`;
+                : `${(item as { min: number; max: number }).min}-${(item as { min: number; max: number }).max}`;
             return (
               <li
                 key={index}
@@ -117,31 +123,14 @@ const MobileDropdown: React.FC<MobileDropdownProps> = ({
 };
 
 export default function CategoryDropdown() {
-  const [selectedCategory, setSelectedCategory] = useState("All Room");
-  const [selectedPrice, setSelectedPrice] = useState("All Price");
   const searchParams = useSearchParams();
-  const router = useRouter();
-  // 동시에 하나의 드롭다운만 열리도록 상태관리
-  const [isOpenDropdown, setIsOpenDropdown] = useState<"category" | "price" | null>(null);
-
-  const handleCategoryChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    const selectedCategory = e.target.value;
-    setSelectedCategory(selectedCategory);
-    router.push(`/shop?category=${selectedCategory}`);
-  };
-
-  const handlePriceChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    const selectedValue = e.target.value;
-    const selectedLabel =
-      priceCategories.find((item) => `${item.min}-${item.max}` === selectedValue)?.label || "All Price";
-
-    setSelectedPrice(selectedLabel);
-    router.push(`/shop?category=${searchParams.get("category") || ""}&priceRange=${selectedValue}`);
-  };
+  const selectedCategory = toUppercaseFirstLetters(searchParams.get("category") || "all rooms");
+  const selectedPrice =
+    priceCategories.find(({ min, max }) => `${min}-${max}` === searchParams.get("priceRange"))?.label || "All Price";
+  const [isOpenDropdown, setIsOpenDropdown] = useState<MenuType | null>(null);
 
   return (
     <>
-      {/* 카테고리 메뉴 */}
       <div className="flex flex-col gap-4">
         <p className="text-neutral-7 text-body2Semi font-body-semi">CATEGORIES</p>
         <DesktopMenu
@@ -151,15 +140,12 @@ export default function CategoryDropdown() {
         />
         <MobileDropdown
           items={categories}
-          handleChange={handleCategoryChange}
-          selectedValue={toUppercaseFirstLetters(selectedCategory)}
+          selectedValue={selectedCategory}
           type="category"
           isOpen={isOpenDropdown === "category"}
           setIsOpenDropdown={() => setIsOpenDropdown(isOpenDropdown === "category" ? null : "category")}
         />
       </div>
-
-      {/* 가격 필터 */}
       <div className="flex flex-col gap-4">
         <p className="text-neutral-7 text-body2Semi font-body-semi">PRICE</p>
         <DesktopMenu
@@ -169,7 +155,6 @@ export default function CategoryDropdown() {
         />
         <MobileDropdown
           items={priceCategories}
-          handleChange={handlePriceChange}
           selectedValue={selectedPrice}
           type="price"
           isOpen={isOpenDropdown === "price"}
