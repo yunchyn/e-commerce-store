@@ -1,6 +1,6 @@
 "use client";
 
-import CategoryDropdown from "@/components/CategoryDropdown";
+import CategoryDropdown from "@/components/product-list/CategoryDropdown";
 import ProductList from "@/components/product-list/ProductList";
 
 export default function Shop() {
