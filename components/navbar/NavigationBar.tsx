@@ -3,26 +3,25 @@
 import { usePathname, useRouter } from "next/navigation";
 
 import Link from "next/link";
-import { supabase } from "@/supabase";
 import NotificationBar from "./NotificationBar";
 import MobileMenu from "./MobileMenu";
+import { useContext } from "react";
+import { SessionContext } from "../SessionProvider";
 
 export default function NavigationBar() {
+  const userSession = useContext(SessionContext);
   const pathname = usePathname();
   const router = useRouter();
 
-  const isUserLoggedIn = async () => {
-    const { data } = await supabase.auth.getSession();
-
-    // session이 null일 경우 로그인되지 않은 상태
-    if (data.session) {
-      // 로그인한 경우
+  const isUserLoggedIn = () => {
+    if (userSession?.userId) {
       router.push("/user");
     } else {
-      // 로그인하지 않은 경우
       router.push("/auth");
     }
   };
+
+  const cartCount = userSession?.cartCount ?? 0;
 
   return (
     <>
@@ -153,7 +152,10 @@ export default function NavigationBar() {
             </div>
 
             {/* 장바구니 */}
-            <Link href="/cart">
+            <Link
+              href="/cart"
+              className="flex flex-row gap-1 items-center"
+            >
               <svg
                 width="24"
                 height="24"
@@ -175,6 +177,13 @@ export default function NavigationBar() {
                   strokeLinejoin="round"
                 />
               </svg>
+              <div
+                className={`w-5 h-5 bg-neutral-7 rounded-full
+                  text-neutral-1 flex justify-center items-center text-hairline2 font-body-bold
+                  ${cartCount > 0 ? "block" : "invisible"}`}
+              >
+                {cartCount}
+              </div>
             </Link>
           </div>
         </div>

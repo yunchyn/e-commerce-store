@@ -1,15 +1,17 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { fetchCartByMemberId, ICartProduct } from "../dataHandler";
 import { supabase } from "@/supabase";
 import CartSummary from "./CartSummary";
 import CartItem from "./CartItem";
 import { CartItemSkeleton } from "../SkeletonComponents";
+import { SessionContext } from "../SessionProvider";
 
 export default function CartList() {
   const router = useRouter();
+  const userSession = useContext(SessionContext);
   const [cartProducts, setCartProducts] = useState<ICartProduct[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -20,18 +22,14 @@ export default function CartList() {
   };
 
   useEffect(() => {
-    async function fetchSessionAndLoadCart() {
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
-      if (!session) {
-        alert("Login is required.");
-        router.push("/auth");
-        return;
-      }
-      const userId = session.user.id;
+    if (userSession && !userSession.userId) {
+      alert("Login is required.");
+      router.push("/auth");
+      return;
+    }
 
-      const fetchedProduct = await fetchCartByMemberId(userId);
+    async function loadCart() {
+      const fetchedProduct = await fetchCartByMemberId(userSession!.userId);
       if (fetchedProduct) {
         console.log(fetchedProduct);
         setCartProducts(fetchedProduct);
@@ -39,8 +37,8 @@ export default function CartList() {
       setLoading(false);
     }
 
-    fetchSessionAndLoadCart();
-  }, [router]);
+    loadCart();
+  }, [router, userSession]);
 
   const subtotal = cartProducts.reduce((total, product) => {
     const price = product.sale_price ?? product.price;
