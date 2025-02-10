@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { IWishProduct } from "../dataHandler";
+import { AddToCart } from "../AddToCart";
 
 export default function WishItem({
   product,
@@ -12,7 +13,7 @@ export default function WishItem({
 }) {
   return (
     <div
-      className="grid grid-cols-3 text-center border-b border-neutral-3 py-6 
+      className="grid grid-cols-3 gap-12 text-center border-b border-neutral-3 py-6 
     items-center"
     >
       <Link
@@ -56,7 +57,12 @@ export default function WishItem({
       </Link>
 
       <p className="font-caption text-[18px]">${product.sale_price ?? product.price}</p>
-      <button className="px-[6px] py-2 bg-neutral-7 rounded-md text-white text-buttonS font-button">Add to cart</button>
+      <button
+        className="px-[6px] py-2 bg-neutral-7 rounded-md text-white text-buttonS font-button"
+        onClick={() => AddToCart(product.product_id, 1, product.colors[0])}
+      >
+        Add to cart
+      </button>
     </div>
   );
 }
