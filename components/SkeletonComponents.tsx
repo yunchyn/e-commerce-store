@@ -91,3 +91,20 @@ export function ProductCardSkeleton() {
     </div>
   );
 }
+
+export function WishItemSkeleton() {
+  return (
+    <div className="grid grid-cols-3 gap-12 justify-items-center border-b border-neutral-3 py-6 items-center">
+      <div className="flex flex-row gap-4">
+        <div className="w-20 h-[106px] bg-gray-200 rounded-md"></div>
+        <div className="flex flex-col gap-2 justify-center">
+          <div className="w-20 h-4 bg-gray-200 rounded"></div>
+          <div className="w-20 h-4 bg-gray-200 rounded"></div>
+          <div className="w-20 h-4 bg-gray-200 rounded"></div>
+        </div>
+      </div>
+      <div className="w-24 h-6 bg-gray-200 rounded"></div>
+      <div className="px-[6px] py-2 bg-gray-200 rounded-md w-full h-11" />
+    </div>
+  );
+}

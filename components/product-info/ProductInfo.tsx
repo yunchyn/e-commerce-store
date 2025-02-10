@@ -7,29 +7,30 @@ import { StarRating } from "../utilities";
 import ProductSlider from "./ProductSlider";
 import { AddToCart } from "../AddToCart";
 import { ProductInfoSkeleton } from "../SkeletonComponents";
-import { AddToWishlist } from "../AddToWishList";
+import WishListButton from "./WishListBtn";
 
-export default function ProductInfo({ id }: { id: number }) {
+export default function ProductInfo({ id: productId }: { id: number }) {
   const [product, setProduct] = useState<IProduct | null>(null);
   const [color, setColor] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!id) return;
+    if (!productId) return;
 
     const loadProduct = async () => {
       setLoading(true);
-      const fetchedProduct = await fetchProductById(id);
+      const fetchedProduct = await fetchProductById(productId);
       if (fetchedProduct) {
         console.log(fetchedProduct);
         setProduct(fetchedProduct);
       }
+
       setLoading(false);
     };
 
     loadProduct();
-  }, [id]);
+  }, [productId]);
 
   if (loading) {
     return <ProductInfoSkeleton />;
@@ -171,31 +172,8 @@ export default function ProductInfo({ id }: { id: number }) {
                 </svg>
               </button>
             </div>
-            <button
-              className="w-3/4 flex flex-row justify-center items-center gap-2
-              py-[10px] border border-neutral-7 rounded-lg
-              max-sm:py-[6px] max-sm:text-buttonS max-sm:h-[41px]"
-              onClick={(e) => {
-                e.preventDefault();
-                AddToWishlist(id);
-              }}
-            >
-              <svg
-                width="25"
-                height="24"
-                viewBox="0 0 25 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fillRule="evenodd"
-                  clipRule="evenodd"
-                  d="M13.1924 6.91706C12.8055 7.28838 12.1945 7.28838 11.8076 6.91706L11.1152 6.2526C10.3048 5.47487 9.20994 5 8 5C5.51472 5 3.5 7.01472 3.5 9.5C3.5 11.8826 4.78979 13.8501 6.65176 15.4666C8.51532 17.0844 10.7434 18.1574 12.0746 18.7051C12.353 18.8196 12.647 18.8196 12.9254 18.7051C14.2566 18.1574 16.4847 17.0844 18.3482 15.4666C20.2102 13.85 21.5 11.8826 21.5 9.5C21.5 7.01472 19.4853 5 17 5C15.7901 5 14.6952 5.47487 13.8848 6.2526L13.1924 6.91706ZM12.5 4.80957C11.3321 3.6888 9.74649 3 8 3C4.41015 3 1.5 5.91015 1.5 9.5C1.5 15.8683 8.47034 19.385 11.3138 20.5547C12.0796 20.8697 12.9204 20.8697 13.6862 20.5547C16.5297 19.385 23.5 15.8682 23.5 9.5C23.5 5.91015 20.5899 3 17 3C15.2535 3 13.6679 3.6888 12.5 4.80957Z"
-                  fill="#141718"
-                />
-              </svg>
-              Wishlist
-            </button>
+
+            <WishListButton id={productId} />
           </div>
           <button
             className="w-full flex justify-center items-center gap-2
@@ -203,7 +181,7 @@ export default function ProductInfo({ id }: { id: number }) {
              max-sm:py-[6px] max-sm:text-buttonS max-sm:h-[41px]"
             onClick={(e) => {
               e.preventDefault();
-              AddToCart(id, quantity, color);
+              AddToCart(productId, quantity, color);
             }}
           >
             Add to Cart

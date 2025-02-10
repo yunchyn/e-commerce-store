@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { fetchWishlistByMemberId, IWishProduct } from "../dataHandler";
 import WishItem from "./WishItem";
+import { WishItemSkeleton } from "../SkeletonComponents";
 
 export default function WishList({ userId }: { userId: string }) {
   const router = useRouter();
@@ -59,13 +60,19 @@ export default function WishList({ userId }: { userId: string }) {
           <p>Action</p>
         </div>
         <div>
-          {wishProducts.map((product) => (
-            <WishItem
-              key={product.wishlist_id}
-              product={product}
-              handleRemove={handleRemove}
-            />
-          ))}
+          {loading ? (
+            Array.from({ length: 3 }).map((_, index) => <WishItemSkeleton key={index} />)
+          ) : wishProducts.length === 0 ? (
+            <div className="text-center py-48 text-body2 font-body text-neutral-4">Your wishlist is empty.</div>
+          ) : (
+            wishProducts.map((product) => (
+              <WishItem
+                key={product.wishlist_id}
+                product={product}
+                handleRemove={handleRemove}
+              />
+            ))
+          )}
         </div>
       </div>
     </div>

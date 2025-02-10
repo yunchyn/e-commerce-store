@@ -177,3 +177,19 @@ export async function fetchWishlistByMemberId(member_id: string): Promise<IWishP
     };
   });
 }
+
+export async function isProductInWishlist(member_id: string, product_id: number): Promise<boolean> {
+  const { data, error } = await supabase
+    .from("wishlist")
+    .select("wishlist_id")
+    .eq("member_id", member_id)
+    .eq("product_id", product_id)
+    .maybeSingle();
+
+  if (error) {
+    console.error("Error checking wishlist:", error);
+    return false;
+  }
+
+  return !!data;
+}
