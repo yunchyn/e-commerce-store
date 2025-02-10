@@ -54,7 +54,15 @@ export async function fetchProductById(product_id: number): Promise<IProduct | n
   return data as IProduct;
 }
 
-export async function fetchMemberById(member_id: string): Promise<IMember | null> {
+export interface IUser {
+  member_id: string;
+  name: string;
+  profile_pic?: string;
+  email: string;
+  created_at: string;
+}
+
+export async function fetchMemberById(member_id: string): Promise<IUser | null> {
   const { data, error } = await supabase.from("member").select("*").eq("member_id", member_id).single();
 
   if (error) {
@@ -62,7 +70,7 @@ export async function fetchMemberById(member_id: string): Promise<IMember | null
     return null;
   }
 
-  return data as IMember;
+  return data as IUser;
 }
 
 export interface IReviewWithMember extends IReview {
