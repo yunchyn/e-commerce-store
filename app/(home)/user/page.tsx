@@ -17,8 +17,12 @@ export default function User() {
 
   // 세션 확인
   useEffect(() => {
-    if (userSession && !userSession.userId) {
+    if (!userSession) return;
+
+    if (!userSession.userId) {
+      alert("Login is required.");
       router.push("/auth");
+      return;
     }
     console.log("session:", userSession);
   }, [userSession, router]);

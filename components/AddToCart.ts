@@ -12,6 +12,25 @@ export const AddToCart = async (productId: number, quantity: number = 1, color?:
 
   const userId = session.user.id;
 
+  // 장바구니의 최대 제품 개수 10개로 제한
+  const { count: cartCount, error: cartCountError } = await supabase
+    .from("cart")
+    .select("cart_id", { count: "exact", head: true })
+    .eq("member_id", userId);
+
+  if (cartCountError) {
+    console.error("Failed to fetch cart count:", cartCountError);
+    alert("Failed to fetch cart count.");
+    return;
+  }
+
+  const totalCartItems = cartCount ?? 0;
+
+  if (totalCartItems >= 10) {
+    alert("You cannot add more than 30 products to the cart.");
+    return;
+  }
+
   // product 테이블에서 colors 가져오기 (color가 없으면 첫 번째 색상 사용)
   if (!color) {
     const { data: product, error: productError } = await supabase
@@ -45,6 +64,13 @@ export const AddToCart = async (productId: number, quantity: number = 1, color?:
   }
 
   if (existingCartItem) {
+    // 제품당 퀀티티는 10개로 제한
+    const newQuantity = existingCartItem.quantity + quantity;
+    if (newQuantity > 10) {
+      alert("You cannot add more than 10 of the same product.");
+      return;
+    }
+
     // 같은 productId + color가 존재하면 quantity 증가
     const { error: updateError } = await supabase
       .from("cart")
