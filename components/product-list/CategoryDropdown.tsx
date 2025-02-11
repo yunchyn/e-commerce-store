@@ -15,9 +15,9 @@ const priceCategories = [
   { label: "$300.00+", min: 300, max: Infinity },
 ];
 
-type MenuType = "category" | "price";
+export type MenuType = "category" | "price" | "user";
 
-type ItemType = Category | { label: string; min: number; max: number };
+type ItemType = Category | { label: string; min: number; max: number } | string;
 
 const DesktopMenu = ({
   items,
@@ -51,7 +51,7 @@ const DesktopMenu = ({
   </div>
 );
 
-const MobileDropdown = ({
+export const MobileDropdown = ({
   items,
   selectedValue,
   type,
@@ -69,10 +69,14 @@ const MobileDropdown = ({
 
   const handleSelect = (value: string) => {
     setIsOpenDropdown();
-    const isCategory = type === "category";
-    const category = isCategory ? value : searchParams.get("category") || "";
-    const priceRange = isCategory ? "" : value;
-    router.push(`/shop?category=${category}&priceRange=${priceRange}`);
+    if (type === "category") {
+      router.push(`/shop?category=${value}`);
+    } else if (type === "price") {
+      const category = searchParams.get("category");
+      router.push(`/shop?category=${category}&priceRange=${value}`);
+    } else if (type === "user") {
+      router.push(`/user?category=${value}`);
+    }
   };
 
   return (
@@ -103,7 +107,12 @@ const MobileDropdown = ({
             const value =
               type === "category"
                 ? (item as Category)
-                : `${(item as { min: number; max: number }).min}-${(item as { min: number; max: number }).max}`;
+                : type === "user"
+                ? (item as string)
+                : type === "price"
+                ? `${(item as { min: number; max: number }).min}-${(item as { min: number; max: number }).max}`
+                : "";
+
             return (
               <li
                 key={index}
@@ -122,7 +131,7 @@ const MobileDropdown = ({
   );
 };
 
-export default function CategoryDropdown() {
+export function CategoryDropdown() {
   const searchParams = useSearchParams();
   const selectedCategory = toUppercaseFirstLetters(searchParams.get("category") || "all rooms");
   const selectedPrice =
