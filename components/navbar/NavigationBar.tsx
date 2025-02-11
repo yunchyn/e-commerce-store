@@ -21,8 +21,6 @@ export default function NavigationBar() {
     }
   };
 
-  const cartCount = userSession?.cartCount ?? 0;
-
   return (
     <>
       <NotificationBar />
@@ -180,9 +178,9 @@ export default function NavigationBar() {
               <div
                 className={`w-5 h-5 bg-neutral-7 rounded-full
                   text-neutral-1 flex justify-center items-center text-hairline2 font-body-bold
-                  ${cartCount > 0 ? "block" : "invisible"}`}
+                  ${userSession && userSession.cartCount > 0 ? "block" : "invisible"}`}
               >
-                {cartCount}
+                {userSession && userSession.cartCount}
               </div>
             </Link>
           </div>

@@ -22,7 +22,9 @@ export default function CartList() {
   };
 
   useEffect(() => {
-    if (userSession && !userSession.userId) {
+    if (!userSession) return; // userSession이 undefined이면 실행 X
+
+    if (!userSession.userId) {
       alert("Login is required.");
       router.push("/auth");
       return;

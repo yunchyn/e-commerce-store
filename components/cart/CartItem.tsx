@@ -17,13 +17,18 @@ export default function CartItem({
   const [quantity, setQuantity] = useState(product.quantity);
 
   const updateQuantity = async (newQuantity: number) => {
+    if (newQuantity > 10) {
+      alert("You can add up to 10 units per product.");
+      return;
+    }
+
     setQuantity(newQuantity);
-    onQuantityChange(product.cart_id, newQuantity); // quantity 업데이트
+    onQuantityChange(product.cart_id, newQuantity);
 
     const { error } = await supabase.from("cart").update({ quantity: newQuantity }).eq("cart_id", product.cart_id);
 
     if (error) {
-      console.error("quantity 업데이트 실패:", error.message);
+      console.error("Failed to update quantity:", error.message);
     }
   };
 
@@ -114,7 +119,9 @@ export default function CartItem({
       </div>
 
       <p className="font-caption text-[18px]">${product.sale_price ?? product.price}</p>
-      <p className="font-caption-semi text-[18px]">${product.quantity * (product.sale_price ?? product.price)}</p>
+      <p className="font-caption-semi text-[18px]">
+        ${(product.quantity * (product.sale_price ?? product.price)).toFixed(2)}
+      </p>
     </div>
   );
 }

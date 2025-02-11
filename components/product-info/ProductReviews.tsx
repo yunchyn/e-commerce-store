@@ -75,6 +75,7 @@ export default function ProductReviews({ id }: { id: number }) {
   const [content, setContent] = useState("");
   const [rating, setRating] = useState(0);
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -111,6 +112,7 @@ export default function ProductReviews({ id }: { id: number }) {
       return;
     }
 
+    setIsLoading(true);
     const { data, error } = await supabase.auth.getUser();
     if (error || !data.user) {
       alert("Please Login.");
@@ -131,7 +133,7 @@ export default function ProductReviews({ id }: { id: number }) {
       .single(); // 새로 추가된 리뷰 데이터를 가져옴
 
     if (insertError) {
-      alert("리뷰 등록 실패.");
+      alert("Failed to submit review.");
       console.log(insertError);
       return;
     }
@@ -155,6 +157,7 @@ export default function ProductReviews({ id }: { id: number }) {
     setContent("");
     setRating(0);
     setError("");
+    setIsLoading(false);
 
     const textArea = textAreaRef.current;
     if (textArea) {
@@ -198,7 +201,7 @@ export default function ProductReviews({ id }: { id: number }) {
           text-white text-buttonS font-button px-10 py-2 rounded-[80px]
             max-sm:p-1 max-sm:right-4"
           >
-            <span className="max-sm:hidden">Write Review</span>
+            <span className="max-sm:hidden">{isLoading ? "Loading..." : "Write Review"}</span>
             <svg
               width="24"
               height="24"
