@@ -16,12 +16,12 @@ export const SessionContext = createContext<UserSession | undefined>(undefined);
 
 export default function SessionProvider({ children }: { children: ReactNode }) {
   const [userSession, setUserSession] = useState<UserSession | undefined>(undefined);
+  const [loading, setLoading] = useState(true);
 
   const updateUserSession = async (userId: string) => {
     const member = await fetchMemberById(userId);
     if (!member) return;
 
-    // 장바구니 아이템 개수
     const { count, error } = await supabase
       .from("cart")
       .select("cart_id", { count: "exact", head: true })
@@ -43,22 +43,25 @@ export default function SessionProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const fetchUserSession = async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
+      const { data, error } = await supabase.auth.getSession();
 
-      if (!user) return;
-      updateUserSession(user.id);
+      if (error || !data.session) {
+        setUserSession(undefined);
+        setLoading(false);
+        return;
+      }
+
+      await updateUserSession(data.session.user.id);
+      setLoading(false);
     };
 
     fetchUserSession();
 
-    // auth 상태 변경 시 세션 업데이트
     const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
       if (session?.user) {
         updateUserSession(session.user.id);
       } else {
-        setUserSession(undefined); // 로그아웃 시 세션 초기화
+        setUserSession(undefined);
       }
     });
 
@@ -66,6 +69,8 @@ export default function SessionProvider({ children }: { children: ReactNode }) {
       authListener?.subscription.unsubscribe();
     };
   }, []);
+
+  if (loading) return null; // 로딩 중일 때 빈 화면을 보여줌
 
   return <SessionContext.Provider value={userSession}>{children}</SessionContext.Provider>;
 }

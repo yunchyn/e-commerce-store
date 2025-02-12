@@ -1,18 +1,14 @@
 "use client";
 
 import { supabase } from "@/supabase";
-import { useRouter } from "next/navigation";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { fetchWishlistByMemberId, IWishProduct } from "../dataHandler";
 import WishItem from "./WishItem";
 import { WishItemSkeleton } from "../SkeletonComponents";
-import { SessionContext } from "../SessionProvider";
 
-export default function WishList() {
-  const router = useRouter();
+export default function WishList({ userId }: { userId: string }) {
   const [wishProducts, setWishProducts] = useState<IWishProduct[]>([]);
   const [loading, setLoading] = useState(true);
-  const userSession = useContext(SessionContext);
 
   const handleRemove = async (wishlistId: number) => {
     const { error } = await supabase.from("wishlist").delete().match({ wishlist_id: wishlistId });
@@ -26,16 +22,8 @@ export default function WishList() {
   };
 
   useEffect(() => {
-    async function fetchSessionAndLoadWish() {
-      if (!userSession) return;
-
-      if (!userSession.userId) {
-        alert("Login is required.");
-        router.push("/auth");
-        return;
-      }
-
-      const fetchedProduct = await fetchWishlistByMemberId(userSession.userId);
+    async function loadWishlist() {
+      const fetchedProduct = await fetchWishlistByMemberId(userId);
       if (fetchedProduct) {
         console.log(fetchedProduct);
         setWishProducts(fetchedProduct);
@@ -43,8 +31,8 @@ export default function WishList() {
       setLoading(false);
     }
 
-    fetchSessionAndLoadWish();
-  }, [router]);
+    loadWishlist();
+  }, [userId]);
 
   return (
     <div className="flex flex-col">

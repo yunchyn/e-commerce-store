@@ -201,3 +201,17 @@ export async function isProductInWishlist(member_id: string, product_id: number)
 
   return !!data;
 }
+
+export async function getCartCount(member_id: string): Promise<number> {
+  const { count, error } = await supabase
+    .from("cart")
+    .select("cart_id", { count: "exact", head: true })
+    .eq("member_id", member_id);
+
+  if (error) {
+    console.error("Error fetching cart count:", error);
+    return 0;
+  }
+
+  return count ?? 0;
+}

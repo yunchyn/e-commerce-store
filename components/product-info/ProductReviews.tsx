@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import { StarRating } from "../utilities";
 import { fetchReviewsByProduct, IReview } from "../dataHandler";
 import { supabase } from "@/supabase";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 
 const Review = ({ review }: { review: IReview }) => {
   return (
@@ -70,7 +72,8 @@ const SelectRating = ({ rating, setRating }: { rating: number; setRating: (ratin
   );
 };
 
-export default function ProductReviews({ id }: { id: number }) {
+export default function ProductReviews({ id: productId }: { id: number }) {
+  const userSession = useSelector((state: RootState) => state.session);
   const [reviews, setReviews] = useState<IReview[]>([]);
   const [content, setContent] = useState("");
   const [rating, setRating] = useState(0);
@@ -91,13 +94,14 @@ export default function ProductReviews({ id }: { id: number }) {
 
   useEffect(() => {
     async function fetchReviews() {
-      const data = await fetchReviewsByProduct(id);
+      console.log("pId: ", productId);
+      const data = await fetchReviewsByProduct(productId);
       console.log(data);
       setReviews(data);
     }
 
     fetchReviews();
-  }, [id]);
+  }, [productId]);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -113,19 +117,18 @@ export default function ProductReviews({ id }: { id: number }) {
     }
 
     setIsLoading(true);
-    const { data, error } = await supabase.auth.getUser();
-    if (error || !data.user) {
+    if (userSession.userId === "") {
       alert("Please Login.");
       return;
     }
-    const userId = data.user.id;
+    const userId = userSession.userId;
 
     // 리뷰 추가
     const { data: newReview, error: insertError } = await supabase
       .from("review")
       .insert({
         member_id: userId,
-        product_id: id,
+        product_id: productId,
         rate: rating,
         content: content,
       })

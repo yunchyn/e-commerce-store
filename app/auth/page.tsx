@@ -1,9 +1,12 @@
 "use client";
 
+import { getCartCount } from "@/components/dataHandler";
+import { setSession } from "@/store/sessionSlice";
 import { supabase } from "@/supabase";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
 
 export interface IMember {
   name?: string;
@@ -17,6 +20,7 @@ export default function SignUp() {
   const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState("");
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const toggleVariant = useCallback(() => {
     setVariant((prev) => (prev === "signIn" ? "signUp" : "signIn"));
@@ -109,6 +113,22 @@ export default function SignUp() {
       });
       if (signInError) console.error(signInError);
       console.log(signInData);
+
+      // Redux에 세션 저장
+      const user = signInData.user;
+      if (user) {
+        const cartCount = await getCartCount(user.id);
+
+        dispatch(
+          setSession({
+            userId: user.id,
+            userName: user.user_metadata?.name || user.email,
+            email: user.email || "",
+            cartCount,
+          })
+        );
+      }
+
       router.push("/");
     } catch (error) {
       console.error(error);

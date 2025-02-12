@@ -8,12 +8,16 @@ import ProductSlider from "./ProductSlider";
 import { AddToCart } from "../AddToCart";
 import { ProductInfoSkeleton } from "../SkeletonComponents";
 import WishListButton from "./WishListBtn";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 
 export default function ProductInfo({ id: productId }: { id: number }) {
+  const userSession = useSelector((state: RootState) => state.session);
   const [product, setProduct] = useState<IProduct | null>(null);
   const [color, setColor] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!productId) return;
@@ -181,7 +185,7 @@ export default function ProductInfo({ id: productId }: { id: number }) {
              max-sm:py-[6px] max-sm:text-buttonS max-sm:h-[41px]"
             onClick={(e) => {
               e.preventDefault();
-              AddToCart(productId, quantity, color);
+              AddToCart(productId, quantity, userSession, dispatch, color);
             }}
           >
             Add to Cart
