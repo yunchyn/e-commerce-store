@@ -1,6 +1,6 @@
 "use client";
 
-import { CategoryDropdown } from "@/components/product-list/CategoryDropdown";
+import { ShopCategoryDropdown } from "@/components/product-list/ShopCategoryDropdown";
 import ProductList from "@/components/product-list/ProductList";
 
 export default function Shop() {
@@ -88,7 +88,7 @@ export default function Shop() {
                 Filter
               </div>
 
-              <CategoryDropdown />
+              <ShopCategoryDropdown />
             </div>
 
             {/* 제품리스트 */}

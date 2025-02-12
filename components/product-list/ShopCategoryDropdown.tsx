@@ -131,7 +131,7 @@ export const MobileDropdown = ({
   );
 };
 
-export function CategoryDropdown() {
+export function ShopCategoryDropdown() {
   const searchParams = useSearchParams();
   const selectedCategory = toUppercaseFirstLetters(searchParams.get("category") || "all rooms");
   const selectedPrice =

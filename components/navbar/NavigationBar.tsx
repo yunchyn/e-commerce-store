@@ -5,11 +5,11 @@ import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import NotificationBar from "./NotificationBar";
 import MobileMenu from "./MobileMenu";
-import { useContext } from "react";
-import { SessionContext } from "../SessionProvider";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 
 export default function NavigationBar() {
-  const userSession = useContext(SessionContext);
+  const userSession = useSelector((state: RootState) => state.session);
   const pathname = usePathname();
   const router = useRouter();
 

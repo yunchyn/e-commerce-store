@@ -1,32 +1,37 @@
+import { setSession, UserSession } from "@/store/sessionSlice";
 import { supabase } from "@/supabase";
+import { Dispatch } from "@reduxjs/toolkit";
+import { getCartCount } from "./dataHandler";
 
-export const AddToCart = async (productId: number, quantity: number = 1, color?: string) => {
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
-
+export const AddToCart = async (
+  productId: number,
+  quantity: number = 1,
+  session: UserSession,
+  dispatch: Dispatch,
+  color?: string
+) => {
   if (!session) {
     alert("Login is required.");
     return;
   }
 
-  const userId = session.user.id;
+  const userId = session.userId;
 
   // 장바구니의 최대 제품 개수 10개로 제한
-  const { count: cartCount, error: cartCountError } = await supabase
-    .from("cart")
-    .select("cart_id", { count: "exact", head: true })
-    .eq("member_id", userId);
+  // const { count: cartCount, error: cartCountError } = await supabase
+  //   .from("cart")
+  //   .select("cart_id", { count: "exact", head: true })
+  //   .eq("member_id", userId);
 
-  if (cartCountError) {
-    console.error("Failed to fetch cart count:", cartCountError);
-    alert("Failed to fetch cart count.");
-    return;
-  }
+  // if (cartCountError) {
+  //   console.error("Failed to fetch cart count:", cartCountError);
+  //   alert("Failed to fetch cart count.");
+  //   return;
+  // }
 
-  const totalCartItems = cartCount ?? 0;
+  const totalCartCount = session.cartCount ?? 0;
 
-  if (totalCartItems >= 10) {
+  if (totalCartCount >= 10) {
     alert("You cannot add more than 30 products to the cart.");
     return;
   }
@@ -106,4 +111,7 @@ export const AddToCart = async (productId: number, quantity: number = 1, color?:
       alert("Added to the cart.");
     }
   }
+  // Redux 세션의 cartCount 업데이트
+  const newCartCount = await getCartCount(session.userId);
+  dispatch(setSession({ ...session, cartCount: newCartCount }));
 };

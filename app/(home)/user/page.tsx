@@ -1,18 +1,19 @@
 "use client";
 
-import { MenuType, MobileDropdown } from "@/components/product-list/CategoryDropdown";
-import { SessionContext } from "@/components/SessionProvider";
+import { MenuType, MobileDropdown } from "@/components/product-list/ShopCategoryDropdown";
 import AccountDetail from "@/components/user/AccountDetail";
 import UserOrders from "@/components/user/UserOrders";
 import WishList from "@/components/user/WishList";
 import { toUppercaseFirstLetters } from "@/components/utilities";
+import { RootState } from "@/store/store";
 import { supabase } from "@/supabase";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 export default function User() {
-  const userSession = useContext(SessionContext);
+  const userSession = useSelector((state: RootState) => state.session);
   const searchParams = useSearchParams();
   const router = useRouter();
   const categories: string[] = ["account", "orders", "wishlist", "log out"];
@@ -29,7 +30,7 @@ export default function User() {
       return;
     }
     console.log("session:", userSession);
-  }, [userSession, router]);
+  }, [userSession]);
 
   const handleLogout = async () => {
     if (confirm("Are you sure to log out?")) {
@@ -48,7 +49,7 @@ export default function User() {
       case "Orders":
         return <UserOrders />;
       case "Wishlist":
-        return <WishList />;
+        return <WishList userId={userSession!.userId} />;
       default:
         return <AccountDetail />;
     }

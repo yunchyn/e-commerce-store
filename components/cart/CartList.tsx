@@ -1,19 +1,22 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useContext, useEffect, useState } from "react";
-import { fetchCartByMemberId, ICartProduct } from "../dataHandler";
+import { useEffect, useState } from "react";
+import { fetchCartByMemberId, getCartCount, ICartProduct } from "../dataHandler";
 import { supabase } from "@/supabase";
 import CartSummary from "./CartSummary";
 import CartItem from "./CartItem";
 import { CartItemSkeleton } from "../SkeletonComponents";
-import { SessionContext } from "../SessionProvider";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/store/store";
+import { setSession } from "@/store/sessionSlice";
 
 export default function CartList() {
   const router = useRouter();
-  const userSession = useContext(SessionContext);
+  const userSession = useSelector((state: RootState) => state.session);
   const [cartProducts, setCartProducts] = useState<ICartProduct[]>([]);
   const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
 
   const handleQuantityChange = (cartId: number, newQuantity: number) => {
     setCartProducts((prev) =>
@@ -56,6 +59,10 @@ export default function CartList() {
     }
 
     setCartProducts((prev) => prev.filter((product) => product.cart_id !== cartId));
+
+    // Redux 세션의 cartCount 업데이트
+    const newCartCount = await getCartCount(userSession.userId);
+    dispatch(setSession({ ...userSession, cartCount: newCartCount }));
   };
 
   return (
