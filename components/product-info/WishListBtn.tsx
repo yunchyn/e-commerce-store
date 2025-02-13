@@ -1,49 +1,36 @@
 "use client";
 
-import { supabase } from "@/supabase";
 import { useEffect, useState } from "react";
 import { AddToWishlist } from "../AddToWishList";
 import { isProductInWishlist } from "../dataHandler";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 
 export default function WishListButton({ id: productId }: { id: number }) {
-  const [userId, setUserId] = useState<string | null>(null);
+  const userSession = useSelector((state: RootState) => state.session);
   const [isInWishlist, setIsInWishlist] = useState(false);
 
   useEffect(() => {
-    const fetchUser = async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      console.log("session: ", user);
-      if (user) {
-        setUserId(user.id);
-      }
-    };
-
-    fetchUser();
-  }, []);
-
-  useEffect(() => {
-    if (!userId) return;
+    if (!userSession.userId) return;
 
     const checkWishlist = async () => {
-      const exists = await isProductInWishlist(userId, productId);
+      const exists = await isProductInWishlist(userSession.userId, productId);
       console.log("Wishlist status: ", exists);
       setIsInWishlist(exists);
     };
 
     checkWishlist();
-  }, [userId, productId]);
+  }, [userSession.userId, productId]);
 
   const handleClick = async (e: React.MouseEvent) => {
     e.preventDefault();
-    if (!userId) {
-      alert("Please log in to add items to the wishlist.");
+    if (!userSession.userId) {
+      alert("Login is required.");
       return;
     }
 
-    await AddToWishlist(productId); // Add product to wishlist
-    setIsInWishlist(true); // Update state immediately after adding to wishlist
+    await AddToWishlist(productId);
+    setIsInWishlist(true); // 위시리스트 상태 업데이트
   };
 
   return (

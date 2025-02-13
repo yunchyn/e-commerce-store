@@ -10,7 +10,7 @@ export const AddToCart = async (
   dispatch: Dispatch,
   color?: string
 ) => {
-  if (!session) {
+  if (!session.userId) {
     alert("Login is required.");
     return;
   }

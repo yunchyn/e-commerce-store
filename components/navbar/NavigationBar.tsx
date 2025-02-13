@@ -13,9 +13,17 @@ export default function NavigationBar() {
   const pathname = usePathname();
   const router = useRouter();
 
-  const isUserLoggedIn = () => {
+  const goToUser = () => {
     if (userSession?.userId) {
       router.push("/user");
+    } else {
+      router.push("/auth");
+    }
+  };
+
+  const goToCart = () => {
+    if (userSession?.userId) {
+      router.push("/cart");
     } else {
       router.push("/auth");
     }
@@ -129,7 +137,7 @@ export default function NavigationBar() {
             </div>
             {/* 사용자 */}
             <div
-              onClick={isUserLoggedIn}
+              onClick={goToUser}
               className="cursor-pointer
               max-sm:hidden"
             >
@@ -150,16 +158,15 @@ export default function NavigationBar() {
             </div>
 
             {/* 장바구니 */}
-            <Link
-              href="/cart"
-              className="flex flex-row gap-1 items-center"
-            >
+            <div className="flex flex-row gap-1 items-center">
               <svg
                 width="24"
                 height="24"
                 viewBox="0 0 24 24"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
+                onClick={goToCart}
+                className="cursor-pointer"
               >
                 <path
                   d="M9 6L9 7C9 8.65685 10.3431 10 12 10C13.6569 10 15 8.65685 15 7V6"
@@ -182,7 +189,7 @@ export default function NavigationBar() {
               >
                 {userSession && userSession.cartCount}
               </div>
-            </Link>
+            </div>
           </div>
         </div>
       </div>

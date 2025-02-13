@@ -4,12 +4,35 @@ import { useState } from "react";
 import Link from "next/link";
 import { Category } from "../product-list/ProductCard";
 import { toUppercaseFirstLetters } from "../utilities";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
+import { useRouter } from "next/navigation";
 
 const categories: Category[] = ["all rooms", "living room", "bedroom", "kitchen", "bathroom"];
 
 export default function MobileMenu() {
+  const userSession = useSelector((state: RootState) => state.session);
   const [isOpen, setIsOpen] = useState(false);
   const [isShopOpen, setIsShopOpen] = useState(false);
+  const router = useRouter();
+
+  const goToUser = () => {
+    if (userSession?.userId) {
+      router.push("/user");
+      setIsOpen(false);
+    } else {
+      router.push("/auth");
+    }
+  };
+
+  const goToCart = () => {
+    if (userSession?.userId) {
+      router.push("/cart");
+      setIsOpen(false);
+    } else {
+      router.push("/auth");
+    }
+  };
 
   return (
     <div className="block sm:hidden">
@@ -165,10 +188,9 @@ export default function MobileMenu() {
           </div>
 
           <div className="absolute w-full bottom-11 mt-6 text-buttonM font-button text-neutral-4">
-            <Link
-              href="/cart"
-              onClick={() => setIsOpen(false)}
-              className="flex justify-between items-center py-2
+            <div
+              onClick={goToCart}
+              className="cursor-pointer flex justify-between items-center py-2
             border-b border-neutral-3"
             >
               <span>Cart</span>
@@ -199,12 +221,11 @@ export default function MobileMenu() {
                   2
                 </span> */}
               </div>
-            </Link>
+            </div>
 
-            <Link
-              href="/user"
-              onClick={() => setIsOpen(false)}
-              className="flex justify-between items-center py-2
+            <div
+              onClick={goToUser}
+              className="cursor-pointer flex justify-between items-center py-2
             border-b border-neutral-3"
             >
               <span>User</span>
@@ -224,7 +245,7 @@ export default function MobileMenu() {
                   />
                 </svg>
               </div>
-            </Link>
+            </div>
             <button
               className="w-full mt-6 py-2 bg-black text-white rounded-md
           text-buttonM font-button"

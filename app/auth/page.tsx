@@ -3,6 +3,7 @@
 import { getCartCount } from "@/components/dataHandler";
 import { setSession } from "@/store/sessionSlice";
 import { supabase } from "@/supabase";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -144,7 +145,12 @@ export default function SignUp() {
         className="relative w-1/2
       max-sm:w-full"
       >
-        <p className="absolute w-full flex justify-center pt-6 text-[22px]">3legant.</p>
+        <Link
+          href="/"
+          className="absolute w-full flex justify-center pt-6 text-[22px]"
+        >
+          3legant.
+        </Link>
         <img
           src="/img/signup.png"
           alt="signup"
