@@ -18,6 +18,7 @@ export default function User() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const categories: string[] = ["account", "orders", "wishlist", "log out"];
+  const mobileCategories: string[] = ["account", "orders", "wishlist"];
   const selectedCategory = toUppercaseFirstLetters(searchParams.get("category") || "account");
   const [isOpenDropdown, setIsOpenDropdown] = useState<MenuType | null>(null);
   const [isLoggingOut, setIsLoggingOut] = useState(false); // 로그아웃 중일때는 바로 "/"로 push되게 하기 위함
@@ -139,14 +140,26 @@ export default function User() {
           </div>
 
           {/* 모바일 메뉴 */}
-          <div className="max-sm:w-full max-sm:px-4">
+          <div
+            className="hidden
+          max-sm:w-full max-sm:px-4 max-sm:block"
+          >
             <MobileDropdown
-              items={categories}
+              items={mobileCategories}
               selectedValue={selectedCategory}
               type="user"
               isOpen={isOpenDropdown === "category"}
               setIsOpenDropdown={() => setIsOpenDropdown(isOpenDropdown === "category" ? null : "category")}
             />
+            <div className="pt-4 flex justify-center">
+              <button
+                className="text-buttonS font-button
+              text-neutral-4 hover:text-neutral-7"
+                onClick={handleLogout}
+              >
+                Log out
+              </button>
+            </div>
           </div>
         </div>
         {/* 카테고리별 섹션 */}

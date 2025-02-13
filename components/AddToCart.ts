@@ -1,4 +1,5 @@
-import { setSession, UserSession } from "@/store/sessionSlice";
+import { setSession } from "@/store/sessionSlice";
+import type { UserSession } from "@/store/sessionSlice";
 import { supabase } from "@/supabase";
 import { Dispatch } from "@reduxjs/toolkit";
 import { getCartCount } from "./dataHandler";
