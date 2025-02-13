@@ -35,7 +35,8 @@ export default function CartItem({
   return (
     <div
       className="grid grid-cols-[2fr_1fr_1fr_1fr] text-center border-b border-neutral-3 py-6 
-    items-center"
+    items-center
+    max-sm:grid-cols-[2fr_1fr]"
     >
       <Link
         href={`/shop/${product.product_id}`}
@@ -44,7 +45,8 @@ export default function CartItem({
         <img
           src={product.image}
           alt="Product Image"
-          className="max-w-20"
+          className="max-w-20
+          max-sm:max-h-24"
         />
         <div className="text-left flex flex-col gap-2 justify-center">
           <p className="text-caption1Semi font-caption-semi">{product.name}</p>
@@ -80,7 +82,8 @@ export default function CartItem({
         className="w-[80px] px-2 py-1 grid grid-cols-3 place-items-center 
       bg-white rounded border border-neutral-7
       text-[12px] font-body-semi
-      mx-auto"
+      mx-auto
+      max-sm:hidden"
       >
         <button onClick={() => updateQuantity(Math.max(1, quantity - 1))}>
           <svg
@@ -118,10 +121,66 @@ export default function CartItem({
         </button>
       </div>
 
-      <p className="font-caption text-[18px]">${product.sale_price ?? product.price}</p>
-      <p className="font-caption-semi text-[18px]">
-        ${(product.quantity * (product.sale_price ?? product.price)).toFixed(2)}
+      <p
+        className="font-caption text-[18px]
+      max-sm:hidden"
+      >
+        ${product.sale_price ?? product.price}
       </p>
+      <div className="max-sm:flex max-sm:flex-col max-sm:items-end">
+        <div
+          className="hidden
+        max-sm:block"
+        >
+          <div
+            className="w-[70px] px-1 py-1 grid grid-cols-3 place-items-center 
+      bg-white rounded border border-neutral-7
+      text-[12px] font-body-semi
+      max-sm:mb-4"
+          >
+            <button onClick={() => updateQuantity(Math.max(1, quantity - 1))}>
+              <svg
+                width="16"
+                height="17"
+                viewBox="0 0 16 17"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M3.22925 8.5H12.5626"
+                  stroke="#121212"
+                  strokeWidth="0.75"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
+            {quantity}
+            <button onClick={() => updateQuantity(quantity + 1)}>
+              <svg
+                width="16"
+                height="17"
+                viewBox="0 0 16 17"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fillRule="evenodd"
+                  clipRule="evenodd"
+                  d="M8.375 3.83398C8.375 3.62688 8.20711 3.45898 8 3.45898C7.79289 3.45898 7.625 3.62688 7.625 3.83398V8.12567H3.33325C3.12615 8.12567 2.95825 8.29356 2.95825 8.50067C2.95825 8.70778 3.12615 8.87567 3.33325 8.87567H7.625V13.1673C7.625 13.3744 7.79289 13.5423 8 13.5423C8.20711 13.5423 8.375 13.3744 8.375 13.1673V8.87567H12.6666C12.8737 8.87567 13.0416 8.70778 13.0416 8.50067C13.0416 8.29356 12.8737 8.12567 12.6666 8.12567H8.375V3.83398Z"
+                  fill="#121212"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+        <p
+          className="font-caption-semi text-[18px]
+        max-sm:text-caption1Semi max-sm:font-caption-semi"
+        >
+          ${(product.quantity * (product.sale_price ?? product.price)).toFixed(2)}
+        </p>
+      </div>
     </div>
   );
 }

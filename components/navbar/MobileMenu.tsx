@@ -4,9 +4,11 @@ import { useState } from "react";
 import Link from "next/link";
 import { Category } from "../product-list/ProductCard";
 import { toUppercaseFirstLetters } from "../utilities";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { useRouter } from "next/navigation";
+import { supabase } from "@/supabase";
+import { clearSession } from "@/store/sessionSlice";
 
 const categories: Category[] = ["all rooms", "living room", "bedroom", "kitchen", "bathroom"];
 
@@ -15,6 +17,7 @@ export default function MobileMenu() {
   const [isOpen, setIsOpen] = useState(false);
   const [isShopOpen, setIsShopOpen] = useState(false);
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const goToUser = () => {
     if (userSession?.userId) {
@@ -32,6 +35,16 @@ export default function MobileMenu() {
     } else {
       router.push("/auth");
     }
+  };
+
+  const handleLogout = async () => {
+    if (confirm("Are you sure to log out?")) {
+      await supabase.auth.signOut();
+      dispatch(clearSession());
+      setIsOpen(false);
+      router.push("/");
+    }
+    return;
   };
 
   return (
@@ -249,8 +262,9 @@ export default function MobileMenu() {
             <button
               className="w-full mt-6 py-2 bg-black text-white rounded-md
           text-buttonM font-button"
+              onClick={userSession?.userId ? async () => handleLogout() : () => router.push("/auth")}
             >
-              Sign In
+              {userSession?.userId ? "Log out" : "Sign In"}
             </button>
           </div>
         </div>

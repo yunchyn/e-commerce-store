@@ -15,7 +15,7 @@ export default function CartList() {
   const router = useRouter();
   const userSession = useSelector((state: RootState) => state.session);
   const [cartProducts, setCartProducts] = useState<ICartProduct[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
   const handleQuantityChange = (cartId: number, newQuantity: number) => {
@@ -34,6 +34,7 @@ export default function CartList() {
     }
 
     async function loadCart() {
+      setLoading(true);
       const fetchedProduct = await fetchCartByMemberId(userSession!.userId);
       if (fetchedProduct) {
         console.log(fetchedProduct);
@@ -66,16 +67,23 @@ export default function CartList() {
   };
 
   return (
-    <>
-      <div className="flex flex-col w-3/5">
+    <div
+      className="w-full flex flex-row gap-16 
+    max-sm:flex-col max-sm:gap-10"
+    >
+      <div
+        className="flex flex-col w-3/5
+      max-sm:w-full"
+      >
         <div
           className="grid grid-cols-[2fr_1fr_1fr_1fr] text-center border-b border-neutral-7 pb-6
-      text-body2Semi font-body-semi"
+      text-body2Semi font-body-semi
+      max-sm:grid-cols-[2fr_1fr]"
         >
           <p className="text-left">Product</p>
-          <p>Quantity</p>
-          <p>Price</p>
-          <p>Subtotal</p>
+          <p className="max-sm:hidden">Quantity</p>
+          <p className="max-sm:hidden">Price</p>
+          <p className="max-sm:hidden">Subtotal</p>
         </div>
 
         {loading ? (
@@ -95,6 +103,6 @@ export default function CartList() {
       </div>
 
       <CartSummary subtotal={subtotal} />
-    </>
+    </div>
   );
 }

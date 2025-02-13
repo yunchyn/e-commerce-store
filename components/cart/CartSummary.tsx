@@ -14,9 +14,15 @@ export default function CartSummary({ subtotal }: { subtotal: number }) {
   return (
     <div
       className="w-2/5 self-start border border-neutral-7 rounded-md p-7
-    sticky top-5"
+    sticky top-5
+    max-sm:w-full max-sm:p-4"
     >
-      <p className="text-headline7 font-headline mb-4">Cart summary</p>
+      <p
+        className="text-headline7 font-headline mb-4
+      max-sm:text-body2Semi max-sm:font-body-semi"
+      >
+        Cart summary
+      </p>
 
       <div className="flex flex-col gap-3">
         {(
@@ -29,7 +35,8 @@ export default function CartSummary({ subtotal }: { subtotal: number }) {
           <label
             key={value}
             className="flex justify-between items-center border border-neutral-7 rounded-[4px] px-4 py-3 cursor-pointer
-              text-body2 font-body"
+              text-body2 font-body
+              max-sm:text-caption1 max-sm:font-caption"
           >
             <div className="flex gap-3 items-center">
               <input
@@ -40,7 +47,8 @@ export default function CartSummary({ subtotal }: { subtotal: number }) {
                 onChange={() => setShippingMethod(value)}
                 className="w-[18px] h-[18px] appearance-none rounded-full 
                   shadow-[0_0_0_1px_black] border-4 border-white checked:bg-black
-                  cursor-pointer"
+                  cursor-pointer
+                  max-sm:w-[15px] max-sm:h-[15px]"
               />
               {label}
             </div>
@@ -49,20 +57,29 @@ export default function CartSummary({ subtotal }: { subtotal: number }) {
         ))}
       </div>
 
-      <div className="flex justify-between mt-4 py-[13px] text-body2 font-body">
+      <div
+        className="flex justify-between mt-4 py-[13px] text-body2 font-body
+      max-sm:text-caption1 max-sm:font-caption"
+      >
         <p>Subtotal</p>
         <p className="text-body2Semi font-body-semi">${subtotal.toFixed(2)}</p>
       </div>
       <hr />
       <div
         className="flex justify-between font-bold
-        text-body1 font-body py-[13px]"
+        text-body1 font-body py-[13px]
+        max-sm:text-body2Bold max-sm:font-body-bold"
       >
         <p>Total</p>
         <p>${total.toFixed(2)}</p>
       </div>
 
-      <button className="bg-neutral-7 rounded-lg text-buttonM font-button text-white w-full py-3 mt-8">Checkout</button>
+      <button
+        className="bg-neutral-7 rounded-lg text-buttonM font-button text-white w-full py-3 mt-8
+      max-sm:py-2"
+      >
+        Checkout
+      </button>
     </div>
   );
 }
