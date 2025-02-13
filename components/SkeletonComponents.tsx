@@ -1,17 +1,41 @@
 export function CartItemSkeleton() {
   return (
-    <div className="grid grid-cols-[2fr_1fr_1fr_1fr] text-center border-b border-neutral-3 py-6 items-center animate-pulse">
+    <div
+      className="grid grid-cols-[2fr_1fr_1fr_1fr] text-center border-b border-neutral-3 py-6 items-center animate-pulse
+    max-sm:grid-cols-[2fr_1fr] max-sm:relative"
+    >
       <div className="flex flex-row gap-4">
-        <div className="w-20 h-[106px] bg-gray-200 rounded-md"></div>
+        <div
+          className="w-20 h-[106px] bg-gray-200 rounded-md
+        max-sm:w-[72px] max-sm:max-h-24"
+        ></div>
         <div className="flex flex-col gap-2 justify-center">
-          <div className="w-32 h-4 bg-gray-200 rounded"></div>
-          <div className="w-24 h-4 bg-gray-200 rounded"></div>
-          <div className="w-24 h-4 bg-gray-200 rounded"></div>
+          <div
+            className="w-32 h-4 bg-gray-200 rounded
+          max-sm:w-20"
+          ></div>
+          <div
+            className="w-24 h-4 bg-gray-200 rounded
+          max-sm:w-20"
+          ></div>
+          <div
+            className="w-24 h-4 bg-gray-200 rounded
+          max-sm:w-20"
+          ></div>
         </div>
       </div>
-      <div className="w-10 h-4 bg-gray-200 rounded mx-auto"></div>
-      <div className="w-16 h-4 bg-gray-200 rounded mx-auto"></div>
-      <div className="w-16 h-4 bg-gray-200 rounded mx-auto"></div>
+      <div
+        className="w-10 h-4 bg-gray-200 rounded mx-auto
+      max-sm:hidden"
+      ></div>
+      <div
+        className="w-16 h-4 bg-gray-200 rounded mx-auto
+      max-sm:hidden"
+      ></div>
+      <div
+        className="w-16 h-4 bg-gray-200 rounded mx-auto
+      max-sm:h-6 max-sm:absolute max-sm:right-0"
+      ></div>
     </div>
   );
 }
@@ -94,17 +118,32 @@ export function ProductCardSkeleton() {
 
 export function WishItemSkeleton() {
   return (
-    <div className="grid grid-cols-3 gap-12 justify-items-center border-b border-neutral-3 py-6 items-center">
+    <div
+      className="grid grid-cols-3 gap-12 justify-items-center border-b border-neutral-3 py-6 items-center
+    max-sm:grid-cols-[2fr_1fr] max-sm:gap-4"
+    >
       <div className="flex flex-row gap-4">
-        <div className="w-20 h-[106px] bg-gray-200 rounded-md"></div>
+        <div
+          className="w-20 h-[106px] bg-gray-200 rounded-md
+        max-sm:w-[72px] max-sm:max-h-24"
+        ></div>
         <div className="flex flex-col gap-2 justify-center">
-          <div className="w-20 h-4 bg-gray-200 rounded"></div>
+          <div
+            className="w-20 h-4 bg-gray-200 rounded
+          max-sm:w-24"
+          ></div>
           <div className="w-20 h-4 bg-gray-200 rounded"></div>
           <div className="w-20 h-4 bg-gray-200 rounded"></div>
         </div>
       </div>
-      <div className="w-24 h-6 bg-gray-200 rounded"></div>
-      <div className="px-[6px] py-2 bg-gray-200 rounded-md w-full h-11" />
+      <div
+        className="w-24 h-6 bg-gray-200 rounded
+      max-sm:w-16 max-sm:h-4"
+      ></div>
+      <div
+        className="px-[6px] py-2 bg-gray-200 rounded-md w-full h-11
+      max-sm:col-span-2 max-sm:h-10"
+      />
     </div>
   );
 }

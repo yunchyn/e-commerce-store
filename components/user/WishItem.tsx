@@ -18,7 +18,8 @@ export default function WishItem({
   return (
     <div
       className="grid grid-cols-3 gap-12 text-center border-b border-neutral-3 py-6 
-    items-center"
+    items-center
+     max-sm:grid-cols-[2fr_1fr] max-sm:gap-4"
     >
       <Link
         href={`/shop/${product.product_id}`}
@@ -27,7 +28,8 @@ export default function WishItem({
         <img
           src={product.image}
           alt="Product Image"
-          className="max-w-20"
+          className="max-w-20
+          max-sm:max-h-24"
         />
         <div className="text-left flex flex-col gap-2 justify-center">
           <p className="text-caption1Semi font-caption-semi">{product.name}</p>
@@ -60,9 +62,15 @@ export default function WishItem({
         </div>
       </Link>
 
-      <p className="font-caption text-[18px]">${product.sale_price ?? product.price}</p>
+      <p
+        className="font-caption text-[18px]
+      max-sm:text-caption1Semi max-sm:font-caption-semi"
+      >
+        ${product.sale_price ?? product.price}
+      </p>
       <button
-        className="px-[6px] py-2 bg-neutral-7 rounded-md text-white text-buttonS font-button"
+        className="px-[6px] py-2 bg-neutral-7 rounded-md text-white text-buttonS font-button
+        max-sm:col-span-2 max-sm:w-full max-sm:py-[6px]"
         onClick={() => AddToCart(product.product_id, 1, userSession, dispatch, product.colors[0])}
       >
         Add to cart

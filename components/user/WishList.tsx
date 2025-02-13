@@ -8,7 +8,7 @@ import { WishItemSkeleton } from "../SkeletonComponents";
 
 export default function WishList({ userId }: { userId: string }) {
   const [wishProducts, setWishProducts] = useState<IWishProduct[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const handleRemove = async (wishlistId: number) => {
     const { error } = await supabase.from("wishlist").delete().match({ wishlist_id: wishlistId });
@@ -23,6 +23,7 @@ export default function WishList({ userId }: { userId: string }) {
 
   useEffect(() => {
     async function loadWishlist() {
+      setLoading(true);
       const fetchedProduct = await fetchWishlistByMemberId(userId);
       if (fetchedProduct) {
         console.log(fetchedProduct);

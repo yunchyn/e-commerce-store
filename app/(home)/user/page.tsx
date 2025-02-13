@@ -99,7 +99,7 @@ export default function User() {
         {/* 유저정보 */}
         <div
           className="w-1/4 h-[500px] flex flex-col items-center bg-neutral-2 py-10
-        max-sm:w-full max-sm:h-auto"
+        max-sm:w-full max-sm:h-auto max-sm:pt-10 max-sm:pb-5"
         >
           <div className="w-20 h-20 bg-neutral-5 rounded-full"></div>
           <div className="pt-1 pb-10 text-body1Semi font-body-semi">
