@@ -2,6 +2,8 @@ import Link from "next/link";
 import { StarRating } from "../utilities";
 import { useSearchParams } from "next/navigation";
 import { AddToCart } from "../AddToCart";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 
 export type Category = "all rooms" | "living room" | "bedroom" | "kitchen" | "bathroom";
 
@@ -21,6 +23,8 @@ export interface IProduct {
 
 export const CarouselCard = ({ product_id, name, price, sale_price, image, is_new, rating }: IProduct) => {
   const category = useSearchParams().get("category") || "all rooms";
+  const userSession = useSelector((state: RootState) => state.session);
+  const dispatch = useDispatch();
 
   return (
     <Link
@@ -41,7 +45,7 @@ export const CarouselCard = ({ product_id, name, price, sale_price, image, is_ne
             max-sm:w-10/12"
             onClick={(e) => {
               e.preventDefault();
-              AddToCart(product_id, 1);
+              AddToCart(product_id, 1, userSession, dispatch);
             }}
           >
             Add to cart
