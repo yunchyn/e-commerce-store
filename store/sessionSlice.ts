@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
-interface UserSession {
+export interface UserSession {
   userId: string;
   userName: string;
   profilePic?: string;
