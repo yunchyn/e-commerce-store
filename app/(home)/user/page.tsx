@@ -5,12 +5,13 @@ import AccountDetail from "@/components/user/AccountDetail";
 import UserOrders from "@/components/user/UserOrders";
 import WishList from "@/components/user/WishList";
 import { toUppercaseFirstLetters } from "@/components/utilities";
+import { clearSession } from "@/store/sessionSlice";
 import { RootState } from "@/store/store";
 import { supabase } from "@/supabase";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useEffect, useMemo, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function User() {
   const userSession = useSelector((state: RootState) => state.session);
@@ -19,10 +20,12 @@ export default function User() {
   const categories: string[] = ["account", "orders", "wishlist", "log out"];
   const selectedCategory = toUppercaseFirstLetters(searchParams.get("category") || "account");
   const [isOpenDropdown, setIsOpenDropdown] = useState<MenuType | null>(null);
+  const [isLoggingOut, setIsLoggingOut] = useState(false); // 로그아웃 중일때는 바로 "/"로 push되게 하기 위함
+  const dispatch = useDispatch();
 
   // 세션 확인
   useEffect(() => {
-    if (!userSession) return;
+    if (isLoggingOut || !userSession) return;
 
     if (!userSession.userId) {
       alert("Login is required.");
@@ -30,11 +33,13 @@ export default function User() {
       return;
     }
     console.log("session:", userSession);
-  }, [userSession]);
+  }, [userSession, isLoggingOut]);
 
   const handleLogout = async () => {
     if (confirm("Are you sure to log out?")) {
+      setIsLoggingOut(true);
       await supabase.auth.signOut();
+      dispatch(clearSession());
       router.push("/"); // 로그아웃 후 홈으로 이동
     }
     return;
@@ -44,7 +49,7 @@ export default function User() {
     router.back();
   };
 
-  const CategorySection = () => {
+  const CategorySection = useMemo(() => {
     switch (selectedCategory) {
       case "Orders":
         return <UserOrders />;
@@ -53,7 +58,7 @@ export default function User() {
       default:
         return <AccountDetail />;
     }
-  };
+  }, [selectedCategory, userSession]);
 
   return (
     <div
@@ -149,7 +154,7 @@ export default function User() {
           className="px-[72px] w-3/4
         max-sm:px-0 max-sm:w-full max-sm:pt-10"
         >
-          <CategorySection />
+          {CategorySection}
         </div>
       </div>
     </div>

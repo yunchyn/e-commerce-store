@@ -118,7 +118,7 @@ export default function ProductReviews({ id: productId }: { id: number }) {
 
     setIsLoading(true);
     if (userSession.userId === "") {
-      alert("Please Login.");
+      alert("Login is required.");
       return;
     }
     const userId = userSession.userId;
@@ -182,7 +182,10 @@ export default function ProductReviews({ id: productId }: { id: number }) {
         onSubmit={onSubmit}
         className="w-full flex flex-col my-10"
       >
-        <div className="pl-[3px] pb-5">
+        <div
+          className={`pl-[3px] pb-5
+          ${userSession.userId ? "block" : "hidden"}`}
+        >
           <SelectRating
             rating={rating}
             setRating={setRating}
@@ -196,13 +199,15 @@ export default function ProductReviews({ id: productId }: { id: number }) {
             ref={textAreaRef}
             onChange={handleChange}
             value={content}
-            placeholder="Write your review here."
+            placeholder={userSession.userId ? "Write your review here." : "Login is required."}
+            disabled={!userSession.userId}
           />
           <button
             type="submit"
             className="absolute right-5 top-1/2 transform -translate-y-1/2 cursor-pointer bg-neutral-7 
           text-white text-buttonS font-button px-10 py-2 rounded-[80px]
             max-sm:p-1 max-sm:right-4"
+            disabled={!userSession.userId}
           >
             <span className="max-sm:hidden">{isLoading ? "Loading..." : "Write Review"}</span>
             <svg

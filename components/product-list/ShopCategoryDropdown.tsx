@@ -136,10 +136,12 @@ export function ShopCategoryDropdown() {
   const selectedCategory = toUppercaseFirstLetters(searchParams.get("category") || "all rooms");
   const selectedPrice =
     priceCategories.find(({ min, max }) => `${min}-${max}` === searchParams.get("priceRange"))?.label || "All Price";
+  // 동시에 하나의 드롭다운만 열리도록 상태관리
   const [isOpenDropdown, setIsOpenDropdown] = useState<MenuType | null>(null);
 
   return (
     <>
+      {/* 카테고리 메뉴 */}
       <div className="flex flex-col gap-4">
         <p className="text-neutral-7 text-body2Semi font-body-semi">CATEGORIES</p>
         <DesktopMenu
@@ -155,6 +157,7 @@ export function ShopCategoryDropdown() {
           setIsOpenDropdown={() => setIsOpenDropdown(isOpenDropdown === "category" ? null : "category")}
         />
       </div>
+      {/* 가격 필터 */}
       <div className="flex flex-col gap-4">
         <p className="text-neutral-7 text-body2Semi font-body-semi">PRICE</p>
         <DesktopMenu
