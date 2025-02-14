@@ -39,6 +39,7 @@ export default function MobileMenu() {
 
   const handleLogout = async () => {
     if (confirm("Are you sure to log out?")) {
+      [];
       await supabase.auth.signOut();
       dispatch(clearSession());
       setIsOpen(false);
