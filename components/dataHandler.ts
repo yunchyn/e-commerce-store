@@ -1,6 +1,7 @@
 import { IProduct } from "./product-list/ProductCard";
 import { supabase } from "../supabase";
 import { IMember } from "@/app/auth/page";
+import { IShippingAddress } from "./user/AccountDetail";
 
 export interface IReview {
   review_id: number;
@@ -214,4 +215,41 @@ export async function getCartCount(member_id: string): Promise<number> {
   }
 
   return count ?? 0;
+}
+
+export async function upsertShippingAddress(memberId: string, addressData: IShippingAddress) {
+  // insert 또는 update
+  const { data, error } = await supabase.from("shipping_address").upsert(
+    [
+      {
+        member_id: memberId,
+        ...addressData,
+      },
+    ],
+    { onConflict: "member_id" }
+  );
+
+  if (error) {
+    throw new Error(`Failed to save shipping address: ${error.message}`);
+  }
+  return data;
+}
+
+export async function fetchShippingAddressByMemberId(member_id: string): Promise<IShippingAddress | null> {
+  const { data, error } = await supabase.from("shipping_address").select("*").eq("member_id", member_id).single();
+
+  if (error) {
+    console.error("Error fetching shipping address by member id:", error);
+    return null;
+  }
+
+  return data as IShippingAddress;
+}
+
+export async function updateMember(member_id: string, memberData: Partial<IMember>) {
+  const { error } = await supabase.from("member").update(memberData).eq("member_id", member_id);
+
+  if (error) {
+    throw new Error("Failed to update member information.");
+  }
 }

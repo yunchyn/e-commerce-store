@@ -1,7 +1,10 @@
 import { IMember } from "@/app/auth/page";
+import { UserSession } from "@/store/sessionSlice";
 import { useForm } from "react-hook-form";
+import { fetchMemberById, fetchShippingAddressByMemberId, updateMember, upsertShippingAddress } from "../dataHandler";
+import { useEffect } from "react";
 
-export interface IAddress {
+export interface IShippingAddress {
   recipient_name: string;
   phone: string;
   address: string;
@@ -9,9 +12,9 @@ export interface IAddress {
   postal_code: string;
 }
 
-interface IFormData extends IAddress, IMember {}
+interface IFormData extends IShippingAddress, IMember {}
 
-export default function AccountDetail() {
+export default function AccountDetail({ userSession }: { userSession: UserSession }) {
   const {
     register,
     handleSubmit,
@@ -19,8 +22,51 @@ export default function AccountDetail() {
     formState: { errors },
   } = useForm<IFormData>();
 
+  useEffect(() => {
+    async function loadMemberAndShippingAddress() {
+      const [memberData, addressData] = await Promise.all([
+        fetchMemberById(userSession.userId),
+        fetchShippingAddressByMemberId(userSession.userId),
+      ]);
+
+      if (memberData) {
+        Object.entries(memberData).forEach(([key, value]) => {
+          setValue(key as keyof IFormData, value);
+        });
+      }
+
+      if (addressData) {
+        Object.entries(addressData).forEach(([key, value]) => {
+          setValue(key as keyof IFormData, value);
+        });
+      }
+    }
+    loadMemberAndShippingAddress();
+  }, [userSession.userId, setValue]);
+
+  const onSubmit = async (data: IFormData) => {
+    try {
+      // 회원 정보 업데이트
+      await updateMember(userSession.userId, {
+        name: data.name,
+        email: data.email,
+      });
+
+      // 배송지 정보 업데이트
+      await upsertShippingAddress(userSession.userId, data);
+
+      alert("Member and shipping address saved successfully.");
+    } catch (error) {
+      alert("Something went wrong.");
+      console.error(error);
+    }
+  };
+
   return (
-    <div className="flex flex-col gap-6">
+    <form
+      className="flex flex-col gap-6"
+      onSubmit={handleSubmit(onSubmit)}
+    >
       {/* 회원정보 */}
       <div className="text-body1Semi font-[32px]">Account Detail</div>
       <div>
@@ -29,6 +75,16 @@ export default function AccountDetail() {
           {...register("name")}
           type="text"
           placeholder="Name"
+          className="text-body2 font-body text-neutral-4
+            w-full rounded-md border border-neutral-4 pl-4 py-1 my-3"
+        />
+      </div>
+      <div>
+        <p className="text-hairline2 font-hairline text-neutral-4">EMAIL *</p>
+        <input
+          {...register("email")}
+          type="email"
+          placeholder="Email"
           className="text-body2 font-body text-neutral-4
             w-full rounded-md border border-neutral-4 pl-4 py-1 my-3"
         />
@@ -92,6 +148,6 @@ export default function AccountDetail() {
       >
         Save changes
       </button>
-    </div>
+    </form>
   );
 }

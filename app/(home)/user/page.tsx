@@ -57,7 +57,7 @@ export default function User() {
       case "Wishlist":
         return <WishList userId={userSession!.userId} />;
       default:
-        return <AccountDetail />;
+        return <AccountDetail userSession={userSession} />;
     }
   }, [selectedCategory, userSession]);
 
