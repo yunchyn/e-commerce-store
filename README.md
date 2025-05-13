@@ -61,27 +61,28 @@
 &nbsp;
 ## 프로젝트 화면
 ### 데스크탑
-<img src="https://github.com/user-attachments/assets/249fbf19-e692-40a6-b6f9-5be578b7e7d3" width="500" alt="Image 1" />
-<img src="https://github.com/user-attachments/assets/622fd447-7841-4853-836d-3c4a25aaaa0a" width="500" alt="Image 2" />
-<img src="https://github.com/user-attachments/assets/bdc2af37-ad9c-4b84-af01-8ad04b05475b" width="500" alt="Image 3" />
-<img src="https://github.com/user-attachments/assets/37c3d744-3faf-48e7-b3e2-0a7cc883b7a8" width="500" alt="Image 4" />
-<img src="https://github.com/user-attachments/assets/82628cb7-e4da-4b88-9095-a862093ff547" width="500" alt="Image 5" />
-<img src="https://github.com/user-attachments/assets/a36a8d45-2dcd-4a8e-9c4c-4393a78f1b73" width="500" alt="Image 6" />
-<img src="https://github.com/user-attachments/assets/383601fc-30cf-4331-9b2a-88b90e9fd9fb" width="500" alt="Image 7" />
-<img src="https://github.com/user-attachments/assets/1ea2be56-191e-4fc7-83b5-351f3df039bb" width="500" alt="Image 8" />
+<img src="https://github.com/user-attachments/assets/249fbf19-e692-40a6-b6f9-5be578b7e7d3" alt="Image 1" />
+<img src="https://github.com/user-attachments/assets/622fd447-7841-4853-836d-3c4a25aaaa0a" alt="Image 2" />
+<img src="https://github.com/user-attachments/assets/bdc2af37-ad9c-4b84-af01-8ad04b05475b" alt="Image 3" />
+<img src="https://github.com/user-attachments/assets/37c3d744-3faf-48e7-b3e2-0a7cc883b7a8" alt="Image 4" />
+<img src="https://github.com/user-attachments/assets/82628cb7-e4da-4b88-9095-a862093ff547" alt="Image 5" />
+<img src="https://github.com/user-attachments/assets/a36a8d45-2dcd-4a8e-9c4c-4393a78f1b73" alt="Image 6" />
+<img src="https://github.com/user-attachments/assets/383601fc-30cf-4331-9b2a-88b90e9fd9fb" alt="Image 7" />
+<img src="https://github.com/user-attachments/assets/1ea2be56-191e-4fc7-83b5-351f3df039bb" alt="Image 8" />
 
 
 &nbsp;
 ### 모바일
-<img src="https://github.com/user-attachments/assets/bc54191b-5a8b-4483-a490-03257cc9c704" width="500" alt="Image 1" />
-<img src="https://github.com/user-attachments/assets/3ea5dd42-41bb-4cc5-a2df-bb10d1bcf09c" width="500" alt="Image 2" />
-<img src="https://github.com/user-attachments/assets/ec835bf4-72db-422d-804b-b4f44172ef8e" width="500" alt="Image 3" />
-<img src="https://github.com/user-attachments/assets/43fa4c51-e956-4421-b44e-b9374022ef3f" width="500" alt="Image 4" />
-<img src="https://github.com/user-attachments/assets/8d1dac16-52a1-4688-9e89-97b530638a2f" width="500" alt="Image 5" />
-<img src="https://github.com/user-attachments/assets/cdd383a8-53e3-4bcd-a855-842ce08169c3" width="500" alt="Image 6" />
-<img src="https://github.com/user-attachments/assets/8d0d89d3-4d51-47d4-8883-d3b817be6d7e" width="500" alt="Image 7" />
-<img src="https://github.com/user-attachments/assets/d520a017-c760-43d2-a8f4-17ef4fb22b06" width="500" alt="Image 8" />
-<img src="https://github.com/user-attachments/assets/192c54a7-cd0b-4fe8-8c39-8047f47ddd80" width="500" alt="Image 9" />
+<img src="https://github.com/user-attachments/assets/bc54191b-5a8b-4483-a490-03257cc9c704" width="400" alt="Image 1" />
+<img src="https://github.com/user-attachments/assets/3ea5dd42-41bb-4cc5-a2df-bb10d1bcf09c" width="400" alt="Image 2" />
+<img src="https://github.com/user-attachments/assets/ec835bf4-72db-422d-804b-b4f44172ef8e" width="400" alt="Image 3" />
+<img src="https://github.com/user-attachments/assets/43fa4c51-e956-4421-b44e-b9374022ef3f" width="400" alt="Image 4" />
+<img src="https://github.com/user-attachments/assets/8d1dac16-52a1-4688-9e89-97b530638a2f" width="400" alt="Image 5" />
+<img src="https://github.com/user-attachments/assets/cdd383a8-53e3-4bcd-a855-842ce08169c3" width="400" alt="Image 6" />
+<img src="https://github.com/user-attachments/assets/8d0d89d3-4d51-47d4-8883-d3b817be6d7e" width="400" alt="Image 7" />
+<img src="https://github.com/user-attachments/assets/d520a017-c760-43d2-a8f4-17ef4fb22b06" width="400" alt="Image 8" />
+<img src="https://github.com/user-attachments/assets/192c54a7-cd0b-4fe8-8c39-8047f47ddd80" width="400" alt="Image 9" />
+
 
 
 
