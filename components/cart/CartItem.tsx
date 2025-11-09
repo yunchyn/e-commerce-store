@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { ICartProduct } from "../dataHandler";
-import { useState } from "react";
-import { supabase } from "@/supabase";
+import Link from 'next/link';
+import { ICartProduct } from '../dataHandler';
+import { useState } from 'react';
+import { supabase } from '@/supabase';
 
 export default function CartItem({
   product,
@@ -18,17 +18,17 @@ export default function CartItem({
 
   const updateQuantity = async (newQuantity: number) => {
     if (newQuantity > 10) {
-      alert("You can add up to 10 units per product.");
+      alert('You can add up to 10 units per product.');
       return;
     }
 
     setQuantity(newQuantity);
     onQuantityChange(product.cart_id, newQuantity);
 
-    const { error } = await supabase.from("cart").update({ quantity: newQuantity }).eq("cart_id", product.cart_id);
+    const { error } = await supabase.from('cart').update({ quantity: newQuantity }).eq('cart_id', product.cart_id);
 
     if (error) {
-      console.error("Failed to update quantity:", error.message);
+      console.error('Failed to update quantity:', error.message);
     }
   };
 
@@ -55,7 +55,7 @@ export default function CartItem({
             className="text-caption1Semi font-caption-semi text-neutral-4 flex flex-row gap-2 items-center cursor-pointer"
             onClick={(e) => {
               e.preventDefault();
-              if (window.confirm("Are you sure you want to remove this item?")) {
+              if (window.confirm('상품을 장바구니에서 삭제하시겠습니까?')) {
                 handleRemove(product.cart_id);
               }
             }}

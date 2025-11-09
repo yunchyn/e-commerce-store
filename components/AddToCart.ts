@@ -1,7 +1,7 @@
-import { setSession, UserSession } from "@/store/sessionSlice";
-import { supabase } from "@/supabase";
-import { Dispatch } from "@reduxjs/toolkit";
-import { getCartCount } from "./dataHandler";
+import { setSession, UserSession } from '@/store/sessionSlice';
+import { supabase } from '@/supabase';
+import { Dispatch } from '@reduxjs/toolkit';
+import { getCartCount } from './dataHandler';
 
 export const AddToCart = async (
   productId: number,
@@ -11,7 +11,7 @@ export const AddToCart = async (
   color?: string
 ) => {
   if (!session.userId) {
-    alert("Login is required.");
+    alert('Login is required.');
     return;
   }
 
@@ -32,21 +32,21 @@ export const AddToCart = async (
   const totalCartCount = session.cartCount ?? 0;
 
   if (totalCartCount >= 10) {
-    alert("You cannot add more than 30 products to the cart.");
+    alert('You cannot add more than 30 products to the cart.');
     return;
   }
 
   // product 테이블에서 colors 가져오기 (color가 없으면 첫 번째 색상 사용)
   if (!color) {
     const { data: product, error: productError } = await supabase
-      .from("product")
-      .select("colors")
-      .eq("product_id", productId)
+      .from('product')
+      .select('colors')
+      .eq('product_id', productId)
       .maybeSingle();
 
     if (productError || !product) {
-      console.error("Failed to fetch product:", productError);
-      alert("Failed to fetch product details.");
+      console.error('Failed to fetch product:', productError);
+      alert('Failed to fetch product details.');
       return;
     }
 
@@ -55,16 +55,16 @@ export const AddToCart = async (
 
   // 현재 장바구니에 같은 productId & color가 존재하는지 확인
   const { data: existingCartItem, error: fetchError } = await supabase
-    .from("cart")
-    .select("quantity")
-    .eq("member_id", userId)
-    .eq("product_id", productId)
-    .eq("color", color)
+    .from('cart')
+    .select('quantity')
+    .eq('member_id', userId)
+    .eq('product_id', productId)
+    .eq('color', color)
     .maybeSingle();
 
   if (fetchError) {
-    console.error("Failed to check the cart:", fetchError);
-    alert("Failed to check the cart.");
+    console.error('Failed to check the cart:', fetchError);
+    alert('Failed to check the cart.');
     return;
   }
 
@@ -72,23 +72,23 @@ export const AddToCart = async (
     // 제품당 퀀티티는 10개로 제한
     const newQuantity = existingCartItem.quantity + quantity;
     if (newQuantity > 10) {
-      alert("You cannot add more than 10 of the same product.");
+      alert('You cannot add more than 10 of the same product.');
       return;
     }
 
     // 같은 productId + color가 존재하면 quantity 증가
     const { error: updateError } = await supabase
-      .from("cart")
+      .from('cart')
       .update({ quantity: existingCartItem.quantity + quantity })
-      .eq("member_id", userId)
-      .eq("product_id", productId)
-      .eq("color", color);
+      .eq('member_id', userId)
+      .eq('product_id', productId)
+      .eq('color', color);
 
     if (updateError) {
-      console.error("Failed to update the cart:", updateError);
-      alert("Failed to update the cart.");
+      console.error('Failed to update the cart:', updateError);
+      alert('Failed to update the cart.');
     } else {
-      alert("Quantity increased in the cart.");
+      alert('Quantity increased in the cart.');
     }
   } else {
     // 존재하지 않으면 새로운 튜플 추가
@@ -102,13 +102,13 @@ export const AddToCart = async (
       insertData.color = color;
     }
 
-    const { error: insertError } = await supabase.from("cart").insert(insertData);
+    const { error: insertError } = await supabase.from('cart').insert(insertData);
 
     if (insertError) {
-      console.error("Failed to add to the cart:", insertError);
-      alert("Failed to add to the cart.");
+      console.error('Failed to add to the cart:', insertError);
+      alert('Failed to add to the cart.');
     } else {
-      alert("Added to the cart.");
+      alert('장바구니에 추가되었습니다.');
     }
   }
   // Redux 세션의 cartCount 업데이트

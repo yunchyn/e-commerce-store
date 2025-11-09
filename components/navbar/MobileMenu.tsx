@@ -39,7 +39,7 @@ export default function MobileMenu() {
   };
 
   const handleLogout = async () => {
-    if (confirm('Are you sure to log out?')) {
+    if (confirm('로그아웃 하시겠습니까?')) {
       [];
       await supabase.auth.signOut();
       dispatch(clearSession());

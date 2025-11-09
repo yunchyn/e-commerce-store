@@ -1,25 +1,25 @@
-"use client";
+'use client';
 
-import { MenuType, MobileDropdown } from "@/components/product-list/ShopCategoryDropdown";
-import AccountDetail from "@/components/user/AccountDetail";
-import UserOrders from "@/components/user/UserOrders";
-import WishList from "@/components/user/WishList";
-import { toUppercaseFirstLetters } from "@/components/utilities";
-import { clearSession } from "@/store/sessionSlice";
-import { RootState } from "@/store/store";
-import { supabase } from "@/supabase";
-import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { MenuType, MobileDropdown } from '@/components/product-list/ShopCategoryDropdown';
+import AccountDetail from '@/components/user/AccountDetail';
+import UserOrders from '@/components/user/UserOrders';
+import WishList from '@/components/user/WishList';
+import { toUppercaseFirstLetters } from '@/components/utilities';
+import { clearSession } from '@/store/sessionSlice';
+import { RootState } from '@/store/store';
+import { supabase } from '@/supabase';
+import Link from 'next/link';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useMemo, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function User() {
   const userSession = useSelector((state: RootState) => state.session);
   const searchParams = useSearchParams();
   const router = useRouter();
-  const categories: string[] = ["account", "orders", "wishlist", "log out"];
-  const mobileCategories: string[] = ["account", "orders", "wishlist"];
-  const selectedCategory = toUppercaseFirstLetters(searchParams.get("category") || "account");
+  const categories: string[] = ['account', 'orders', 'wishlist', 'log out'];
+  const mobileCategories: string[] = ['account', 'orders', 'wishlist'];
+  const selectedCategory = toUppercaseFirstLetters(searchParams.get('category') || 'account');
   const [isOpenDropdown, setIsOpenDropdown] = useState<MenuType | null>(null);
   const [isLoggingOut, setIsLoggingOut] = useState(false); // 로그아웃 중일때는 바로 "/"로 push되게 하기 위함
   const dispatch = useDispatch();
@@ -29,19 +29,19 @@ export default function User() {
     if (isLoggingOut || !userSession) return;
 
     if (!userSession.userId) {
-      alert("Login is required.");
-      router.push("/auth");
+      alert('로그인이 필요합니다.');
+      router.push('/auth');
       return;
     }
-    console.log("session:", userSession);
+    console.log('session:', userSession);
   }, [userSession, isLoggingOut]);
 
   const handleLogout = async () => {
-    if (confirm("Are you sure to log out?")) {
+    if (confirm('로그아웃 하시겠습니까?')) {
       setIsLoggingOut(true);
       await supabase.auth.signOut();
       dispatch(clearSession());
-      router.push("/"); // 로그아웃 후 홈으로 이동
+      router.push('/');
     }
     return;
   };
@@ -52,9 +52,9 @@ export default function User() {
 
   const CategorySection = useMemo(() => {
     switch (selectedCategory) {
-      case "Orders":
+      case 'Orders':
         return <UserOrders />;
-      case "Wishlist":
+      case 'Wishlist':
         return <WishList userId={userSession!.userId} />;
       default:
         return <AccountDetail userSession={userSession} />;
@@ -103,7 +103,7 @@ export default function User() {
         >
           <div className="w-20 h-20 bg-neutral-5 rounded-full"></div>
           <div className="pt-1 pb-10 text-body1Semi font-body-semi">
-            {userSession?.userName ? `${userSession.userName}` : "ㅤ"}
+            {userSession?.userName ? `${userSession.userName}` : 'ㅤ'}
           </div>
 
           {/* 데스크탑 메뉴 */}
@@ -113,7 +113,7 @@ export default function User() {
           >
             <div className="text-[#807E7E] text-body2Semi font-body-semi flex flex-col gap-3">
               {categories.map((c, index) =>
-                c === "log out" ? (
+                c === 'log out' ? (
                   <button
                     key={index}
                     onClick={handleLogout}
@@ -128,8 +128,8 @@ export default function User() {
                     href={`/user?category=${c}`}
                     className={`py-2 border-b ${
                       toUppercaseFirstLetters(c) === selectedCategory
-                        ? "text-neutral-7 border-neutral-7"
-                        : "text-neutral-4 border-transparent"
+                        ? 'text-neutral-7 border-neutral-7'
+                        : 'text-neutral-4 border-transparent'
                     } hover:text-neutral-7`}
                   >
                     {toUppercaseFirstLetters(c)}
@@ -148,8 +148,8 @@ export default function User() {
               items={mobileCategories}
               selectedValue={selectedCategory}
               type="user"
-              isOpen={isOpenDropdown === "category"}
-              setIsOpenDropdown={() => setIsOpenDropdown(isOpenDropdown === "category" ? null : "category")}
+              isOpen={isOpenDropdown === 'category'}
+              setIsOpenDropdown={() => setIsOpenDropdown(isOpenDropdown === 'category' ? null : 'category')}
             />
             <div className="pt-4 flex justify-center">
               <button

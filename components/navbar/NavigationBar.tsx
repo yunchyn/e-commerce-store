@@ -1,7 +1,6 @@
 'use client';
 
 import { usePathname, useRouter } from 'next/navigation';
-
 import Link from 'next/link';
 import NotificationBar from './NotificationBar';
 import MobileMenu from './MobileMenu';
@@ -106,7 +105,7 @@ export default function NavigationBar() {
 
           <div className="absolute right-0 flex flex-row gap gap-4">
             {/* 검색 */}
-            <div className="max-sm:hidden">
+            {/* <div className="max-sm:hidden">
               <svg
                 width="24"
                 height="24"
@@ -122,7 +121,7 @@ export default function NavigationBar() {
                   strokeLinejoin="round"
                 />
               </svg>
-            </div>
+            </div> */}
             {/* 사용자 */}
             <div
               onClick={goToUser}
