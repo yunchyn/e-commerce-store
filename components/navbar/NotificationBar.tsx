@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { useState } from "react";
+import Link from 'next/link';
+import { useState } from 'react';
 
 export default function NotificationBar() {
   const [isVisible, setIsVisible] = useState(true);
@@ -27,7 +27,7 @@ export default function NotificationBar() {
       </svg>
       30% off storewide — Limited time!
       <Link
-        href="/sale"
+        href="/shop"
         className="flex flex-row text-blue border-b border-blue
         max-sm:hidden"
       >

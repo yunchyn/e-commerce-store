@@ -1,7 +1,7 @@
-import CategoryLinks from "@/components/CategoryLinks";
-import BannerSlider from "@/components/BannerSlider";
-import NewArrivals from "@/components/NewArrivals";
-import Link from "next/link";
+import CategoryLinks from '@/components/CategoryLinks';
+import BannerSlider from '@/components/BannerSlider';
+import NewArrivals from '@/components/NewArrivals';
+import Link from 'next/link';
 
 export default function Home() {
   return (
@@ -212,7 +212,7 @@ export default function Home() {
             </p>
             <div className="flex">
               <Link
-                href="/sale"
+                href="/shop"
                 className="flex flex-row items-center gap-1 text-buttonXS font-button border-b border-neutral-7"
               >
                 Shop Now

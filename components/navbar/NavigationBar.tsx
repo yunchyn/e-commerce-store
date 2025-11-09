@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter } from 'next/navigation';
 
-import Link from "next/link";
-import NotificationBar from "./NotificationBar";
-import MobileMenu from "./MobileMenu";
-import { useSelector } from "react-redux";
-import { RootState } from "@/store/store";
+import Link from 'next/link';
+import NotificationBar from './NotificationBar';
+import MobileMenu from './MobileMenu';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store/store';
 
 export default function NavigationBar() {
   const userSession = useSelector((state: RootState) => state.session);
@@ -15,17 +15,17 @@ export default function NavigationBar() {
 
   const goToUser = () => {
     if (userSession?.userId) {
-      router.push("/user");
+      router.push('/user');
     } else {
-      router.push("/auth");
+      router.push('/auth');
     }
   };
 
   const goToCart = () => {
     if (userSession?.userId) {
-      router.push("/cart");
+      router.push('/cart');
     } else {
-      router.push("/auth");
+      router.push('/auth');
     }
   };
 
@@ -92,27 +92,15 @@ export default function NavigationBar() {
           >
             <Link
               href="/"
-              className={pathname === "/" ? "text-neutral-7" : "text-neutral-4"}
+              className={pathname === '/' ? 'text-neutral-7' : 'text-neutral-4'}
             >
               Home
             </Link>
             <Link
               href="/shop"
-              className={pathname === "/shop" ? "text-neutral-7" : "text-neutral-4"}
+              className={pathname === '/shop' ? 'text-neutral-7' : 'text-neutral-4'}
             >
               Shop
-            </Link>
-            <Link
-              href="/sale"
-              className={pathname === "/sale" ? "text-neutral-7" : "text-neutral-4"}
-            >
-              Sale
-            </Link>
-            <Link
-              href="contact-us"
-              className={pathname === "/contact-us" ? "text-neutral-7" : "text-neutral-4"}
-            >
-              Contact Us
             </Link>
           </div>
 
@@ -185,7 +173,7 @@ export default function NavigationBar() {
               <div
                 className={`w-5 h-5 bg-neutral-7 rounded-full
                   text-neutral-1 flex justify-center items-center text-hairline2 font-body-bold
-                  ${userSession && userSession.cartCount > 0 ? "block" : "invisible"}`}
+                  ${userSession && userSession.cartCount > 0 ? 'block' : 'invisible'}`}
               >
                 {userSession && userSession.cartCount}
               </div>

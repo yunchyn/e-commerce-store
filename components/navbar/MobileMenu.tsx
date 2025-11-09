@@ -1,16 +1,17 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import Link from "next/link";
-import { Category } from "../product-list/ProductCard";
-import { toUppercaseFirstLetters } from "../utilities";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/store/store";
-import { useRouter } from "next/navigation";
-import { supabase } from "@/supabase";
-import { clearSession } from "@/store/sessionSlice";
+import { useState } from 'react';
+import Link from 'next/link';
+import { Category } from '../product-list/ProductCard';
+import { toUppercaseFirstLetters } from '../utilities';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '@/store/store';
+import { useRouter } from 'next/navigation';
+import { supabase } from '@/supabase';
+import { clearSession } from '@/store/sessionSlice';
+import SearchBar from './SearchBar';
 
-const categories: Category[] = ["all rooms", "living room", "bedroom", "kitchen", "bathroom"];
+const categories: Category[] = ['all rooms', 'living room', 'bedroom', 'kitchen', 'bathroom'];
 
 export default function MobileMenu() {
   const userSession = useSelector((state: RootState) => state.session);
@@ -21,29 +22,29 @@ export default function MobileMenu() {
 
   const goToUser = () => {
     if (userSession?.userId) {
-      router.push("/user");
+      router.push('/user');
       setIsOpen(false);
     } else {
-      router.push("/auth");
+      router.push('/auth');
     }
   };
 
   const goToCart = () => {
     if (userSession?.userId) {
-      router.push("/cart");
+      router.push('/cart');
       setIsOpen(false);
     } else {
-      router.push("/auth");
+      router.push('/auth');
     }
   };
 
   const handleLogout = async () => {
-    if (confirm("Are you sure to log out?")) {
+    if (confirm('Are you sure to log out?')) {
       [];
       await supabase.auth.signOut();
       dispatch(clearSession());
       setIsOpen(false);
-      router.push("/");
+      router.push('/');
     }
     return;
   };
@@ -70,7 +71,7 @@ export default function MobileMenu() {
       <div
         className={`fixed top-0 left-0 h-full w-11/12 max-w-[343px] bg-white shadow-lg transform transition-transform duration-300 z-50 
           p-6
-          ${isOpen ? "translate-x-0" : "-translate-x-full"}`}
+          ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}
       >
         <div className="flex justify-between items-center">
           <svg
@@ -108,31 +109,7 @@ export default function MobileMenu() {
         </div>
 
         <div className="relative w-full h-full">
-          <div className="relative">
-            <input
-              type="text"
-              placeholder="Search"
-              className="w-full py-3 pl-12 border border-neutral-7 rounded-md
-            text-caption1 font-caption mt-4 outline-none"
-            />
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="absolute left-4 top-[27px]"
-            >
-              <path
-                d="M18.5 18.5L22 22M21 11.5C21 6.25329 16.7467 2 11.5 2C6.25329 2 2 6.25329 2 11.5C2 16.7467 6.25329 21 11.5 21C16.7467 21 21 16.7467 21 11.5Z"
-                stroke="#141718"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </div>
-
+          {/* <SearchBar /> */}
           <div className="mt-4 text-buttonXS font-button">
             <Link
               href="/"
@@ -166,7 +143,7 @@ export default function MobileMenu() {
 
             <div
               className={`w-full transition-[max-height] duration-500 ease-in-out overflow-hidden ${
-                isShopOpen ? "max-h-96" : "max-h-0"
+                isShopOpen ? 'max-h-96' : 'max-h-0'
               }`}
             >
               {categories.map((category) => (
@@ -183,22 +160,6 @@ export default function MobileMenu() {
                 </Link>
               ))}
             </div>
-
-            <Link
-              href="/sale"
-              onClick={() => setIsOpen(false)}
-              className={`block pt-4 pb-4 text-black border-b ${isShopOpen ? "border-t" : ""} border-neutral-3
-                `}
-            >
-              Sale
-            </Link>
-            <Link
-              href="/contact-us"
-              onClick={() => setIsOpen(false)}
-              className="block pt-4 pb-4 text-black border-b border-neutral-3"
-            >
-              Contact Us
-            </Link>
           </div>
 
           <div className="absolute w-full bottom-11 mt-6 text-buttonM font-button text-neutral-4">
@@ -263,16 +224,16 @@ export default function MobileMenu() {
             <button
               className="w-full mt-6 py-2 bg-black text-white rounded-md
           text-buttonM font-button"
-              onClick={userSession?.userId ? async () => handleLogout() : () => router.push("/auth")}
+              onClick={userSession?.userId ? async () => handleLogout() : () => router.push('/auth')}
             >
-              {userSession?.userId ? "Log out" : "Sign In"}
+              {userSession?.userId ? 'Log out' : 'Sign In'}
             </button>
           </div>
         </div>
       </div>
       <div
         className={`fixed top-0 left-0 w-full h-full bg-neutral-7 opacity-40 z-40
-        ${isOpen ? "block" : "hidden"}`}
+        ${isOpen ? 'block' : 'hidden'}`}
       ></div>
     </div>
   );
